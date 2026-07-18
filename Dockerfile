@@ -1,3 +1,5 @@
+ARG VERSION=dev
+
 # ---------- BASE ----------
 FROM node:22 AS base
 
@@ -66,11 +68,17 @@ RUN pnpm --filter battle deploy /deploy --prod
 # ---------- PROD ----------
 FROM node:22 AS prod
 
+ARG VERSION=dev
+
 WORKDIR /usr/src/app
 
 ENV NODE_ENV=production
 
 COPY --from=build /deploy .
+
+RUN printf "%s\n" "$VERSION" > VERSION
+
+LABEL org.opencontainers.image.version="$VERSION"
 
 USER node
 
@@ -82,7 +90,15 @@ HEALTHCHECK --interval=10s --timeout=3s --start-period=5s --retries=3 \
   CMD nc -z localhost 50051 || exit 1
 
 # ---------- PREDEPLOY ----------
-FROM node:22 AS predeploy
+FROM build AS predeploy
+
+ARG VERSION=dev
+
+WORKDIR /usr/src/app
+
+RUN printf "%s\n" "$VERSION" > VERSION
+
+LABEL org.opencontainers.image.version="$VERSION"
 
 WORKDIR /usr/src/app/services/battle
 CMD ["npx", "prisma", "migrate", "deploy", "--schema=prisma/schema.prisma"]
