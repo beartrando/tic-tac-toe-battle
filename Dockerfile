@@ -61,6 +61,7 @@ RUN pnpm --filter @shared/grpc-client-manager build
 RUN pnpm --filter @shared/kafka-manager build
 RUN pnpm --filter @shared/pg-boss-manager build
 
+RUN pnpm --filter battle prisma:generate
 RUN pnpm --filter battle build
 
 RUN pnpm --filter battle deploy /deploy --prod
