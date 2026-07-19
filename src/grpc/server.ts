@@ -1,4 +1,5 @@
 import {BattleService} from './generated/battle';
+import {HealthService} from './generated/common/health';
 import * as grpc from '@grpc/grpc-js';
 import * as battleHandler from "./handlers/battle.handler";
 import * as healthHandler from "./handlers/health.handler";
@@ -9,13 +10,15 @@ server.addService(BattleService, {
   // upsert: battleHandler.upsert,
   // viewBattleByUser: battleHandler.viewBattleByUser,
 
-  health: healthHandler.health,
+  upsertBattle: battleHandler.upsertBattle,
+  joinBattle: battleHandler.joinBattle,
+});
+
+server.addService(HealthService, {
+  check: healthHandler.check,
   status: healthHandler.status,
   livez: healthHandler.livez,
   readyz: healthHandler.readyz,
-
-  upsertBattle: battleHandler.upsertBattle,
-  joinBattle: battleHandler.joinBattle,
 });
 
 export default server;
