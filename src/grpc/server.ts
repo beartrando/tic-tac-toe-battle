@@ -7,18 +7,16 @@ import * as healthHandler from "./handlers/health.handler";
 const server = new grpc.Server();
 
 server.addService(BattleService, {
-  // upsert: battleHandler.upsert,
-  // viewBattleByUser: battleHandler.viewBattleByUser,
-
-  upsertBattle: battleHandler.upsertBattle,
-  joinBattle: battleHandler.joinBattle,
+    get: battleHandler.get,
+    upsert: battleHandler.upsert,
+    join: battleHandler.join,
 });
 
 server.addService(HealthService, {
-  check: healthHandler.check,
-  status: healthHandler.status,
-  livez: healthHandler.livez,
-  readyz: healthHandler.readyz,
+    check: healthHandler.check,
+    status: healthHandler.status,
+    livez: healthHandler.livez,
+    readyz: healthHandler.readyz,
 });
 
 export default server;

@@ -8,69 +8,69 @@ import logger from "@shared/logger";
 import {BattleModel} from "../../models/battle.model";
 
 
-export async function upsertBattle(
-  call: grpc.ServerUnaryCall<profileGrpc.ProfileIdRequest, battleGrpc.BattleObject>,
-  callback: grpc.sendUnaryData<battleGrpc.BattleObject>
+export async function upsert(
+    call: grpc.ServerUnaryCall<profileGrpc.ProfileIdRequest, battleGrpc.BattleObject>,
+    callback: grpc.sendUnaryData<battleGrpc.BattleObject>
 ) {
-  const {profileId} = call.request;
+    const {profileId} = call.request;
 
-  try {
-    const battle = await battleService.upsertBattle(profileId);
+    try {
+        const battle = await battleService.upsert(profileId);
 
-    logger.log(battle);
-    if (!battle) {
-      throw new Error("Battle not found");
+        logger.log(battle);
+        if (!battle) {
+            throw new Error("Battle not found");
+        }
+
+        callback(null, battleToGrpc(battle));
+
+    } catch (err: any) {
+        logger.log(err);
+        callbackError(callback, err);
     }
-
-    callback(null, battleToGrpc(battle));
-
-  } catch (err: any) {
-    logger.log(err);
-    callbackError(callback, err);
-  }
 }
 
-export async function joinBattle(
-  call: grpc.ServerUnaryCall<battleGrpc.StartBattleRequest, battleGrpc.BattleObject>,
-  callback: grpc.sendUnaryData<battleGrpc.BattleObject>
+export async function join(
+    call: grpc.ServerUnaryCall<battleGrpc.StartBattleRequest, battleGrpc.BattleObject>,
+    callback: grpc.sendUnaryData<battleGrpc.BattleObject>
 ) {
-  const {profileId, battleId} = call.request;
+    const {profileId, battleId} = call.request;
 
-  try {
+    try {
 
-    const battle = await battleService.joinBattle(profileId, battleId);
+        const battle = await battleService.join(profileId, battleId);
 
-    if (!battle) {
-      throw new Error(`Cannot join profile ${profileId} to battle ${battleId}.`);
+        if (!battle) {
+            throw new Error(`Cannot join profile ${profileId} to battle ${battleId}.`);
+        }
+
+        callback(null, battleToGrpc(battle));
+
+    } catch (err: any) {
+        logger.log(err);
+        callbackError(callback, err);
     }
-
-    callback(null, battleToGrpc(battle));
-
-  } catch (err: any) {
-    logger.log(err);
-    callbackError(callback, err);
-  }
 }
 
-export const getBattle = async (
-  call: grpc.ServerUnaryCall<battleGrpc.BattleIdRequest, battleGrpc.BattleObject>,
-  callback: grpc.sendUnaryData<battleGrpc.BattleObject>
+export const get = async (
+    call: grpc.ServerUnaryCall<battleGrpc.BattleIdRequest, battleGrpc.BattleObject>,
+    callback: grpc.sendUnaryData<battleGrpc.BattleObject>
 ) => {
-  const {battleId} = call.request;
+    const {battleId} = call.request;
 
-  try {
-    const result = await BattleModel.getBattle(battleId);
+    try {
+        const result = await BattleModel.get(battleId);
 
-    if (!result) {
-      throw new Error("Battle not found");
+        if (!result) {
+            throw new Error("Battle not found");
+        }
+
+        callback(null, battleToGrpc(result));
+
+    } catch (err: any) {
+        logger.log(err);
+        callbackError(callback, err);
     }
-
-    callback(null, battleToGrpc(result));
-
-  } catch (err: any) {
-    logger.log(err);
-    callbackError(callback, err);
-  }
 };
 
 
