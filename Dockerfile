@@ -40,6 +40,8 @@ RUN pnpm --filter battle prisma:generate
 # ---------- DEV ----------
 FROM deps AS dev
 
+COPY services/battle/tsconfig.test.json ./services/battle/
+
 ENV NODE_ENV=development
 
 RUN chown -R node:node /usr/src/app
