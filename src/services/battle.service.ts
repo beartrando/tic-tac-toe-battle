@@ -33,7 +33,7 @@ export async function upsert(profileId: string): Promise<Battle> {
                 return await BattleModel.joinBattle(existingSomebodiesBattle.id, profileId);
             } catch (e) {
                 logger.log(e);
-                // await pgBossManager.queue.enqueueTx(kafkaProducersConfig.topicBattleStarted, battleToGrpc(battle), tx);
+                // await pgBossManager.queue.enqueueTx(kafkaProducersConfig.battleStarted, battleToGrpc(battle), tx);
 
                 // export const makeMove = (move: engineGrpc.BattleMoveRequest): Promise<emptyGrpc.Empty | null> => {
                 //   return engineManager.call((client, cb) => client.battleMove(move, cb));
