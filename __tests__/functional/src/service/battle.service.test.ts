@@ -5,7 +5,7 @@
 // import logger from "@shared/logger/dist";
 //
 // jest.mock("@shared/pg-boss-manager/src/enqueueEvent", () => ({
-//  pgBossManager.enqueueEventTx: jest.fn(),
+//  pgBossManager.queue.enqueueTx: jest.fn(),
 // }));
 //
 //
