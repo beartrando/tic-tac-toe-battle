@@ -31,7 +31,7 @@ export async function upsert(
 }
 
 export async function join(
-    call: grpc.ServerUnaryCall<battleGrpc.StartBattleRequest, battleGrpc.BattleObject>,
+    call: grpc.ServerUnaryCall<battleGrpc.BattleStartRequest, battleGrpc.BattleObject>,
     callback: grpc.sendUnaryData<battleGrpc.BattleObject>
 ) {
     const {profileId, battleId} = call.request;
