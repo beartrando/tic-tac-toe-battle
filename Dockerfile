@@ -74,6 +74,8 @@ FROM node:22 AS prod
 
 ARG VERSION=dev
 
+ENV APP_VERSION=$VERSION
+
 WORKDIR /usr/src/app
 
 ENV NODE_ENV=production
@@ -97,6 +99,8 @@ HEALTHCHECK --interval=10s --timeout=3s --start-period=5s --retries=3 \
 FROM build AS predeploy
 
 ARG VERSION=dev
+
+ENV APP_VERSION=$VERSION
 
 WORKDIR /usr/src/app
 

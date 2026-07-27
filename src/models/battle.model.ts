@@ -8,7 +8,7 @@ export class BattleModel {
     static async findBattleByProfile(profileId: string): Promise<Battle | null> {
         return prisma.battle.findFirst({
             where: {
-                players: {has: profileId},
+                playerIds: {has: profileId},
                 status: {not: BattleStatus.Finished},
             },
         });
@@ -19,7 +19,7 @@ export class BattleModel {
         return prisma.battle.findFirst({
             where: {
                 status: BattleStatus.New,
-                NOT: {players: {has: profileId}},
+                NOT: {playerIds: {has: profileId}},
             },
         });
     }
@@ -35,7 +35,7 @@ export class BattleModel {
                     status: BattleStatus.New,
                 },
                 data: {
-                    players: {push: profileId},
+                    playerIds: {push: profileId},
                     status: BattleStatus.Active,
                 },
             });
@@ -72,7 +72,7 @@ export class BattleModel {
         // logger.log('create battle for profile', profileId);
         return prisma.battle.create({
             data: {
-                players: [profileId],
+                playerIds: [profileId],
                 cells: Array(9).fill(BattleCellValue.EMPTY),
                 status: BattleStatus.New,
             },
@@ -86,7 +86,7 @@ export class BattleModel {
             data: {
                 cells: battle.cells,
                 status: battle.status,
-                winner: battle.winner ?? null,
+                winnerId: battle.winnerId ?? null,
                 lastMoveAt: new Date(),
             },
         });

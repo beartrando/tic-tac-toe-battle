@@ -57,14 +57,14 @@ export function battleCellValueToPrisma(cell: GrpcBattleCellValue): BattleCellVa
 export function battleToGrpc(battle: Battle): BattleObject {
     const grpcCells: GrpcBattleCellValue[] = (battle.cells).map(battleCellValueToGrpc);
     const status: GrpcBattleStatus = battleStatusToGrpc(battle.status);
-    const players: string[] = battle.players;
+    const playerIds: string[] = battle.playerIds;
 
     return {
         id: battle.id,
         cells: grpcCells,
-        players: players,
+        playerIds: playerIds,
         status: status,
-        winner: battle.winner ?? "",
+        winnerId: battle.winnerId ?? "",
         lastMoveAt: battle.lastMoveAt,
         createdAt: battle.createdAt,
         updatedAt: battle.updatedAt,
@@ -74,14 +74,14 @@ export function battleToGrpc(battle: Battle): BattleObject {
 export function battleToPrisma(battle: BattleObject) {
     const cells: BattleCellValue[] = (battle.cells).map(battleCellValueToPrisma);
     const status: BattleStatus = battleStatusToPrisma(battle.status);
-    const players: string[] = battle.players;
+    const playerIds: string[] = battle.playerIds;
 
     return {
         id: battle.id,
         cells: cells,
-        players: players,
+        playerIds: playerIds,
         status: status,
-        winner: battle.winner ?? "",
+        winnerId: battle.winnerId ?? "",
         lastMoveAt: battle.lastMoveAt,
         createdAt: battle.createdAt,
         updatedAt: battle.updatedAt,

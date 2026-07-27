@@ -10,7 +10,12 @@ export const kafkaProducersConfig = {
     topicBattleStarted: process.env.KAFKA_TOPIC_BATTLE_STARTED || 'battle.started',
 };
 
-export const kafkaConsumersConfig = {
+type ConsumerConfig = {
+    topic: string;
+    handler: (message: unknown) => Promise<void>;
+};
+
+export const kafkaConsumersConfig: Record<string, ConsumerConfig> = {
     battleUpdated: {
         topic: process.env.KAFKA_TOPIC_BATTLE_UPDATED || 'battle.updated',
         handler: battleUpdated

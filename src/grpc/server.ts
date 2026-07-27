@@ -8,7 +8,7 @@ const server = new grpc.Server();
 
 server.addService(BattleService, {
     get: battleHandler.get,
-    upsert: battleHandler.upsert,
+    getOrCreate: battleHandler.upsert,
     join: battleHandler.join,
 });
 

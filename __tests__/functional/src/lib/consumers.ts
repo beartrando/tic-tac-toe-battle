@@ -1,5 +1,5 @@
 // import crypto from "crypto";
-// import {prisma} from "../lib/prisma";
+// import {prisma} from "../utils/prisma";
 // import {battleUpdated} from "../services/battleUpdated";
 // import {BattleCellValue, BattleStatus} from "@prisma/client";
 //

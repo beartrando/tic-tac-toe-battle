@@ -4,7 +4,7 @@ import logger from "@shared/logger";
 
 // import pgBossManager from "@shared/pg-boss-manager";
 // import {kafkaProducersConfig} from "../config/kafka.config";
-// import {battleToGrpc} from "../lib/battle-grpc-prisma-converters";
+// import {battleToGrpc} from "../utils/battle-grpc-prisma-converters";
 
 export class NotFoundError extends Error {
     constructor(message: string) {
@@ -57,7 +57,7 @@ export async function join(profileId: string, battleId: string): Promise<Battle 
         throw new Error(`Battle ${battleId} not found.`);
     }
 
-    if (battle.players.includes(profileId)) {
+    if (battle.playerIds.includes(profileId)) {
         return battle;
     }
 
