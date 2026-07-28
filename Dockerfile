@@ -19,7 +19,6 @@ COPY services/battle/jest.config.js ./services/battle/
 COPY services/battle/tsconfig.json ./services/battle/
 COPY services/battle/src ./services/battle/src/
 COPY services/battle/__tests__ ./services/battle/__tests__/
-COPY services/battle/prisma ./services/battle/prisma/
 
 RUN apt-get update && apt-get install -y protobuf-compiler
 
@@ -32,7 +31,7 @@ FROM base AS deps
 RUN pnpm fetch
 RUN pnpm install --offline --frozen-lockfile
 
-RUN mkdir -p ./services/battle/src/grpc/generated
+RUN mkdir -p ./services/battle/src/infrastructure/grpc/generated
 RUN pnpm --filter battle proto:generate
 
 RUN pnpm --filter battle prisma:generate

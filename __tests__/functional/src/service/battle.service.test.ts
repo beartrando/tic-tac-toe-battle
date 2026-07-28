@@ -1,4 +1,4 @@
-// import { upsertBattle } from "../../../../src/services/battle.service";
+// import { upsertBattle } from "../../../../src/orchestration/battle.service";
 // import pgBossManager from "@shared/pg-boss-manager";
 // import { BattleStatus } from "@prisma/client";
 // import prisma from "../../../../src/utils/prisma";

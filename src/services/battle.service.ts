@@ -3,7 +3,7 @@ import {BattleModel} from "../models/battle.model";
 import logger from "@shared/logger";
 
 // import pgBossManager from "@shared/pg-boss-manager";
-// import {kafkaProducersConfig} from "../config/kafka.config";
+// import {kafkaProducersConfig} from "../app/kafka.app";
 // import {battleToGrpc} from "../utils/battle-grpc-prisma-converters";
 
 export class NotFoundError extends Error {
