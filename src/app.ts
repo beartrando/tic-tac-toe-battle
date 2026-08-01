@@ -16,7 +16,7 @@ import pgBossConfig from './config/pg-boss.config';
 const GRPC_PORT =
     process.env.GRPC_PORT ?? '50051';
 
-async function startGrpc(): Promise<void> {
+async function startProto(): Promise<void> {
     return new Promise<void>(
         (resolve, reject) => {
             grpcServer.bindAsync(
@@ -122,7 +122,7 @@ async function createKafkaConsumers(): Promise<void> {
 async function bootstrap(): Promise<void> {
 
     try {
-        await startGrpc();
+        await startProto();
         await startPgBoss();
         await createKafkaConsumers();
         logger.info(

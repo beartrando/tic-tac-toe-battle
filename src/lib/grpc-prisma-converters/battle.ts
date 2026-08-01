@@ -18,7 +18,7 @@ const battleCellValueMap: Record<BattleCellValue, GrpcBattleCellValue> = {
     [BattleCellValue.EMPTY]: GrpcBattleCellValue.CELL_EMPTY,
 };
 
-export function battleStatusToGrpc(status: BattleStatus): GrpcBattleStatus {
+export function battleStatusToProto(status: BattleStatus): GrpcBattleStatus {
     const mapped = battleStatusMap[status];
     if (mapped === undefined) throw new Error(`Unknown BattleStatus: ${status}`);
     return mapped;
@@ -41,7 +41,7 @@ export function battleStatusToPrisma(status: GrpcBattleStatus): BattleStatus {
     return mapped as BattleStatus;
 }
 
-export function battleCellValueToGrpc(cell: BattleCellValue): GrpcBattleCellValue {
+export function battleCellValueToProto(cell: BattleCellValue): GrpcBattleCellValue {
     const mapped = battleCellValueMap[cell];
     if (mapped === undefined) throw new Error(`Unknown BattleCellValue: ${cell}`);
     return mapped;
@@ -54,9 +54,9 @@ export function battleCellValueToPrisma(cell: GrpcBattleCellValue): BattleCellVa
     return mapped as BattleCellValue;
 }
 
-export function battleToGrpc(battle: Battle): BattleObject {
-    const grpcCells: GrpcBattleCellValue[] = (battle.cells).map(battleCellValueToGrpc);
-    const status: GrpcBattleStatus = battleStatusToGrpc(battle.status);
+export function battleToProto(battle: Battle): BattleObject {
+    const grpcCells: GrpcBattleCellValue[] = (battle.cells).map(battleCellValueToProto);
+    const status: GrpcBattleStatus = battleStatusToProto(battle.status);
     const playerIds: string[] = battle.playerIds;
 
     return {

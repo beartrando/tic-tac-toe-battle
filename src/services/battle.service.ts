@@ -4,7 +4,7 @@ import logger from "@shared/logger";
 
 // import pgBossManager from "@shared/pg-boss-manager";
 // import {kafkaProducersConfig} from "../app/kafka.app";
-// import {battleToGrpc} from "../utils/battle-grpc-prisma-converters";
+// import {battleToProto} from "../utils/battle-grpc-prisma-converters";
 
 export class NotFoundError extends Error {
     constructor(message: string) {
@@ -33,9 +33,9 @@ export async function upsert(profileId: string): Promise<Battle> {
                 return await BattleModel.joinBattle(existingSomebodiesBattle.id, profileId);
             } catch (e) {
                 logger.log(e);
-                // await pgBossManager.queue.enqueueTx(kafkaProducersConfig.battleStarted, battleToGrpc(battle), tx);
+                // await pgBossManager.queue.enqueueTx(kafkaProducersConfig.battleStarted, battleToProto(battle), tx);
 
-                // export const makeMove = (move: engineGrpc.BattleMoveRequest): Promise<emptyGrpc.Empty | null> => {
+                // export const makeMove = (move: engineProto.BattleMoveRequest): Promise<emptyProto.Empty | null> => {
                 //   return engineManager.call((client, cb) => client.battleMove(move, cb));
                 // };
             }

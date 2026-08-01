@@ -1,16 +1,16 @@
 import * as grpc from '@grpc/grpc-js';
-import * as battleGrpc from '../generated/battle';
-import * as profileGrpc from '../generated/profile';
+import * as battleProto from '../generated/battle';
+import * as profileProto from '../generated/profile';
 import * as battleService from '../../services/battle.service';
 import {callbackError} from './callback.error';
-import {battleToGrpc} from '../../lib/grpc-prisma-converters/battle';
+import {battleToProto} from '../../lib/grpc-prisma-converters/battle';
 import logger from "@shared/logger";
 import {BattleModel} from "../../models/battle.model";
 
 
 export async function upsert(
-    call: grpc.ServerUnaryCall<profileGrpc.ProfileIdRequest, battleGrpc.BattleObject>,
-    callback: grpc.sendUnaryData<battleGrpc.BattleObject>
+    call: grpc.ServerUnaryCall<profileProto.ProfileIdRequest, battleProto.BattleObject>,
+    callback: grpc.sendUnaryData<battleProto.BattleObject>
 ) {
     const {profileId} = call.request;
 
@@ -22,7 +22,7 @@ export async function upsert(
             throw new Error("Battle not found");
         }
 
-        callback(null, battleToGrpc(battle));
+        callback(null, battleToProto(battle));
 
     } catch (err: any) {
         logger.log(err);
@@ -31,8 +31,8 @@ export async function upsert(
 }
 
 export async function join(
-    call: grpc.ServerUnaryCall<battleGrpc.BattleStartRequest, battleGrpc.BattleObject>,
-    callback: grpc.sendUnaryData<battleGrpc.BattleObject>
+    call: grpc.ServerUnaryCall<battleProto.BattleStartRequest, battleProto.BattleObject>,
+    callback: grpc.sendUnaryData<battleProto.BattleObject>
 ) {
     const {profileId, battleId} = call.request;
 
@@ -44,7 +44,7 @@ export async function join(
             throw new Error(`Cannot join profile ${profileId} to battle ${battleId}.`);
         }
 
-        callback(null, battleToGrpc(battle));
+        callback(null, battleToProto(battle));
 
     } catch (err: any) {
         logger.log(err);
@@ -53,8 +53,8 @@ export async function join(
 }
 
 export const get = async (
-    call: grpc.ServerUnaryCall<battleGrpc.BattleIdRequest, battleGrpc.BattleObject>,
-    callback: grpc.sendUnaryData<battleGrpc.BattleObject>
+    call: grpc.ServerUnaryCall<battleProto.BattleIdRequest, battleProto.BattleObject>,
+    callback: grpc.sendUnaryData<battleProto.BattleObject>
 ) => {
     const {battleId} = call.request;
 
@@ -65,7 +65,7 @@ export const get = async (
             throw new Error("Battle not found");
         }
 
-        callback(null, battleToGrpc(result));
+        callback(null, battleToProto(result));
 
     } catch (err: any) {
         logger.log(err);
