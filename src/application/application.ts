@@ -21,12 +21,12 @@ export class Application {
             await this.dbService.start();
             await this.grpcService.start();
             logger.info(
-                '🚀 Auth service started',
+                '🚀 Battle service started',
             );
         } catch (err) {
             logger.error(
                 {err},
-                '💥 Failed to start Auth',
+                '💥 Failed to start Battle',
             );
             process.exit(1);
         }

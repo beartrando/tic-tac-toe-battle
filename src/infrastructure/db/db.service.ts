@@ -11,7 +11,7 @@ export class DbService {
         return this.prisma;
     }
 
-    async stop(): Promise<void> {
+    async start(): Promise<void> {
     }
 
     async stop(): Promise<void> {

@@ -6,58 +6,54 @@ import HealthHandler from "../infrastructure/grpc/handlers/health.handler";
 import GrpcService from "../infrastructure/grpc/grpc.service";
 import {config as grpcConfig} from "../infrastructure/grpc/config";
 import Application from "../application/application";
-import AuthService from "../infrastructure/auth/auth-service";
 import MessageService from "../infrastructure/message/message.service";
 import JobService from "../infrastructure/job/job.service";
 import DbService from "../infrastructure/db/db.service";
-import {config as messageConfig, messageProducersConfig} from "../infrastructure/message/config";
+import {
+    config as messageConfig,
+    messageConsumersConfig,
+    messageProducersConfig
+} from "../infrastructure/message/config";
+import {config as jobConfig} from "../infrastructure/job/config";
+import PrismaBattleRepository from "../infrastructure/db/repositories/prisma-battle.repository";
+import GetUseCase from "../application/use-cases/battle/get";
+import GetActiveByProfileUseCase from "../application/use-cases/battle/get-active-by-profile";
+import StartUseCase from "../application/use-cases/battle/start";
+import BattleHandler from "../infrastructure/grpc/handlers/battle.handler";
+import BattleUpdatedConsumer from "../infrastructure/message/consumers/battle-updated";
+import UpdateUseCase from "../application/use-cases/battle/update";
 
 
 function buildApplication() {
 
-    const messageService = new MessageService(messageConfig, messageConsumersConfig);
-    const jobService = new JobService(messageConfig, messageProducersConfig)
+    const jobService = new JobService(jobConfig, messageConfig, messageProducersConfig)
+
     const dbService = new DbService();
 
-    const authService = new AuthService();
+    const battleRepository = new PrismaBattleRepository(dbService.client);
 
-    // const deviceRepository = new PrismaDeviceRepository(dbService.client);
-    // const userRepository = new PrismaUserRepository(dbService.client);
-    // const sessionRepository = new PrismaSessionRepository(dbService.client);
-    //
-    //
-    // const anonymousSignInUseCase = new AnonymousSignInUseCase(
-    //     userRepository,
-    //     deviceRepository,
-    //     sessionRepository,
-    //     jobService,
-    //     dbService,
-    //     authService,
-    //     messageProducersConfig.userCreated
-    // );
-    // const getUseCase = new GetUseCase(userRepository);
-    // const getMeUseCase = new GetMeUseCase(userRepository);
-    // const logoutUseCase = new LogoutUseCase(sessionRepository);
-    // const refreshTokensUseCase = new RefreshTokensUseCase(authService, sessionRepository);
-    //
+    const updateUseCase = new UpdateUseCase(battleRepository);
+    const battleUpdatedConsumer = new BattleUpdatedConsumer(updateUseCase);
+    const messageService = new MessageService(messageConfig, messageConsumersConfig, battleUpdatedConsumer);
+
+    const getUseCase = new GetUseCase(battleRepository);
+    const getActiveByProfileUseCase = new GetActiveByProfileUseCase(battleRepository);
+    const startUseCase = new StartUseCase(battleRepository, jobService, messageProducersConfig.battleStarted);
 
     const healthUseCase = new HealthUseCase(dbService, messageService, jobService);
     const statusUseCase = new StatusUseCase;
     const livezUseCase = new LivezUseCase;
     const readyzUseCase = new ReadyzUseCase;
 
-    // const authHandler = new AuthHandler(
-    //     anonymousSignInUseCase,
-    //     refreshTokensUseCase,
-    //     logoutUseCase,
-    //     getMeUseCase,
-    //     getUseCase,
-    //     authService
-    // );
+    const battleHandler = new BattleHandler(
+        getUseCase,
+        getActiveByProfileUseCase,
+        startUseCase,
+    );
 
     const healthHandler = new HealthHandler(healthUseCase, statusUseCase, livezUseCase, readyzUseCase);
 
-    const grpcService = new GrpcService(grpcConfig.port, authHandler, healthHandler);
+    const grpcService = new GrpcService(grpcConfig.port, battleHandler, healthHandler);
 
     return new Application(grpcService, dbService, jobService, messageService);
 }
