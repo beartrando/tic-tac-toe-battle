@@ -1,12 +1,12 @@
 import {PrismaClient} from "@prisma/client";
 
 import ProfileRepository from "../../../domain/repositories/profile.repository";
-import ProfileEntity from "../../../domain/entities/profile.entity";
+import BattleEntity from "../../../domain/entities/battle.entity";
 
 import Id from "../../../domain/value-objects/id.vo";
-import ProfileDbMapper from "../mappers/profile.mapper";
+import BattleDbMapper from "../mappers/battle.mapper";
 
-export class PrismaProfileRepository implements ProfileRepository {
+export class PrismaBattleRepository implements ProfileRepository {
 
     constructor(
         private readonly prisma: PrismaClient,
@@ -15,7 +15,7 @@ export class PrismaProfileRepository implements ProfileRepository {
 
     async findById(
         id: Id,
-    ): Promise<ProfileEntity | null> {
+    ): Promise<BattleEntity | null> {
 
         const profile = await this.prisma.profile.findUnique({
             where: {
@@ -27,14 +27,14 @@ export class PrismaProfileRepository implements ProfileRepository {
             return null;
         }
 
-        return ProfileDbMapper.toEntity(profile);
+        return BattleDbMapper.toEntity(profile);
     }
 
     async save(
-        profile: ProfileEntity,
-    ): Promise<ProfileEntity> {
+        profile: BattleEntity,
+    ): Promise<BattleEntity> {
 
-        const profileDb = ProfileDbMapper.toPersistence(profile);
+        const profileDb = BattleDbMapper.toPersistence(profile);
         const {
             id,
             userId,
@@ -51,12 +51,12 @@ export class PrismaProfileRepository implements ProfileRepository {
             update,
         });
 
-        return ProfileDbMapper.toEntity(result);
+        return BattleDbMapper.toEntity(result);
     }
 
     async findByUserId(
         userId: Id,
-    ): Promise<ProfileEntity | null> {
+    ): Promise<BattleEntity | null> {
 
         const profile = await this.prisma.profile.findUnique({
             where: {userId: userId.value},
@@ -67,11 +67,11 @@ export class PrismaProfileRepository implements ProfileRepository {
             return null;
         }
 
-        return ProfileDbMapper.toEntity(profile);
+        return BattleDbMapper.toEntity(profile);
     }
 }
 
-export default PrismaProfileRepository;
+export default PrismaBattleRepository;
 
 
 

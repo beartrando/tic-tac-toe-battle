@@ -1,5 +1,5 @@
 import ProfileRepository from "../../../domain/repositories/profile.repository";
-import ProfileEntity from "../../../domain/entities/profile.entity";
+import BattleEntity from "../../../domain/entities/battle.entity";
 import Id from "../../../domain/value-objects/id.vo";
 
 export class GetMeUseCase {
@@ -8,7 +8,7 @@ export class GetMeUseCase {
     ) {
     }
 
-    async execute(userId: Id): Promise<ProfileEntity> {
+    async execute(userId: Id): Promise<BattleEntity> {
 
         // const userId = this.authService.verifyAccessToken(accessToken)
 

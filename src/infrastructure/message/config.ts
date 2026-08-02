@@ -5,12 +5,12 @@ export const config = {
 };
 
 export const kafkaConsumersConfig: Record<string, ConsumerConfig> = {
-    // userCreated: {
+    // battleUpdated: {
     //     topic:
     //         process.env.KAFKA_TOPIC_USER_CREATED ??
     //         'user.created',
     //
-    //     handler: userCreated,
+    //     handler: battleUpdated,
     // },
 };
 

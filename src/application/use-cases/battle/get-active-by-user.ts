@@ -1,24 +1,25 @@
 import ProfileRepository from "../../../domain/repositories/profile.repository";
-import ProfileEntity from "../../../domain/entities/profile.entity";
+import BattleEntity from "../../../domain/entities/battle.entity";
 import Id from "../../../domain/value-objects/id.vo";
 
-export class GetUseCase {
+export class GetByUserUseCase {
     constructor(
         private readonly profileRepository: ProfileRepository,
     ) {
     }
 
-    async execute(Id: Id): Promise<ProfileEntity> {
-        const profile = await this.profileRepository.findById(Id);
+    async execute(userId: Id): Promise<BattleEntity> {
 
-        if (!profile) {
+        const user = await this.profileRepository.findByUserId(userId);
+
+        if (!user) {
             throw new Error("Profile does not exist");
         }
 
-        return profile;
+        return user;
     }
 }
 
 
-export default GetUseCase;
+export default GetByUserUseCase;
 

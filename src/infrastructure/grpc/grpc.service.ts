@@ -2,15 +2,16 @@ import * as grpc from "@grpc/grpc-js";
 import * as healthProto from '../../contracts/proto/common/health';
 import * as profileProto from '../../contracts/proto/profile';
 import logger from "@shared/logger";
-import ProfileHandler from "./handlers/profile.handler";
+import BattleHandler from "./handlers/battle.handler";
 import HealthHandler from "./handlers/health.handler";
+import * as battleHandler from "../../grpc/handlers/battle.handler";
 
 export class GrpcService {
     private readonly server: grpc.Server;
 
     constructor(
         private readonly port: number,
-        private readonly profileHandler: ProfileHandler,
+        private readonly profileHandler: BattleHandler,
         private readonly healthHandler: HealthHandler,
     ) {
         this.server = new grpc.Server();
@@ -49,10 +50,9 @@ export class GrpcService {
 
     private registerProfileService() {
         this.server.addService(profileProto.ProfileService, {
-            getOrCreate: this.profileHandler.getOrCreate,
-            get: this.profileHandler.get,
-            getByUser: this.profileHandler.getByUser,
-            getMe: this.profileHandler.getMe,
+            // get: this.battleHandler.get,
+            // getOrCreate: this.battleHandler.upsert,
+            // join: this.battleHandler.join,
         });
     }
 

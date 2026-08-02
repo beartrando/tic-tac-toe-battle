@@ -1,5 +1,5 @@
 import * as profileProto from "../../../contracts/proto/profile";
-import ProfileEntity from "../../../domain/entities/profile.entity";
+import BattleEntity from "../../../domain/entities/battle.entity";
 import Id from "../../../domain/value-objects/id.vo";
 import Nickname from "../../../domain/value-objects/nickname.vo";
 import Level from "../../../domain/value-objects/level.vo";
@@ -7,7 +7,7 @@ import Rating from "../../../domain/value-objects/rating.vo";
 import Experience from "../../../domain/value-objects/experience.vo";
 
 export class ProfileGrpcMapper {
-    static toGrpc(profile: ProfileEntity): profileProto.ProfileObject {
+    static toGrpc(profile: BattleEntity): profileProto.ProfileObject {
 
         return profileProto.ProfileObject.create({
             id: profile.id.value,
@@ -21,9 +21,9 @@ export class ProfileGrpcMapper {
         });
     }
 
-    // static toEntity(user: authProto.UserObject): ProfileEntity {
+    // static toEntity(user: authProto.UserObject): BattleEntity {
     //
-    //     return ProfileEntity.create({
+    //     return BattleEntity.create({
     //         id: new Id(user.id),
     //         email: user.email ? new Email(user.email) : null,
     //         googleId: user.googleId,

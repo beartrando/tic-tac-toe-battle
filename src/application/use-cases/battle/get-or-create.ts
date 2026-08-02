@@ -1,5 +1,5 @@
 import ProfileRepository from "../../../domain/repositories/profile.repository";
-import ProfileEntity from "../../../domain/entities/profile.entity";
+import BattleEntity from "../../../domain/entities/battle.entity";
 import JobService from "../../../infrastructure/job/job.service";
 import Id from "../../../domain/value-objects/id.vo";
 
@@ -11,7 +11,7 @@ export class GetOrCreateUseCase {
     ) {
     }
 
-    async execute(userId: Id): Promise<ProfileEntity> {
+    async execute(userId: Id): Promise<BattleEntity> {
 
         const existing = await this.profileRepository.findById(userId);
 
@@ -19,7 +19,7 @@ export class GetOrCreateUseCase {
             return existing;
         }
 
-        const profile = ProfileEntity.create({userId});
+        const profile = BattleEntity.create({userId});
 
         await this.profileRepository.save(profile);
 

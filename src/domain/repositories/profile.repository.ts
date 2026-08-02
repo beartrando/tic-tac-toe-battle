@@ -1,12 +1,12 @@
-import ProfileEntity from "../entities/profile.entity";
+import BattleEntity from "../entities/battle.entity";
 import Id from "../value-objects/id.vo";
 
 export interface ProfileRepository {
-    findById(id: Id): Promise<ProfileEntity | null>;
+    findById(id: Id): Promise<BattleEntity | null>;
 
-    save(user: ProfileEntity): Promise<ProfileEntity>;
+    save(user: BattleEntity): Promise<BattleEntity>;
 
-    findByUserId(userId: Id): Promise<ProfileEntity | null>;
+    findByUserId(userId: Id): Promise<BattleEntity | null>;
 }
 
 export default ProfileRepository;

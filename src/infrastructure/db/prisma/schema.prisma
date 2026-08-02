@@ -9,49 +9,25 @@ datasource db {
   directUrl = env("DATABASE_DIRECT_URL")
 }
 
-model Profile {
-  id         String @id @default(uuid())
-  userId     String @unique
-  nickname   String @default("guest")
-  level      Int    @default(1)
-  rating     Int    @default(1000)
-  experience Int    @default(0)
-
-  achievements ProfileAchievement[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+enum BattleCellValue {
+  X
+  O
+  EMPTY
 }
 
-model ProfileAchievement {
-  id            String @id @default(uuid())
-  profileId     String
-  achievementId String
-
-  profile     Profile     @relation(fields: [profileId], references: [id])
-  achievement Achievement @relation(fields: [achievementId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([profileId, achievementId])
+enum BattleStatus {
+  New
+  Active
+  Finished
 }
 
-model Achievement {
-  id          String  @id @default(uuid())
-  title       String  @unique
-  description String?
-
-  Profiles ProfileAchievement[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model ExperienceLevel {
-  level        Int @id
-  nextRequired Int
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Battle {
+  id         String            @id @default(uuid())
+  playerIds  String[]
+  cells      BattleCellValue[]
+  status     BattleStatus
+  winnerId   String?
+  lastMoveAt DateTime          @default(now())
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
 }
