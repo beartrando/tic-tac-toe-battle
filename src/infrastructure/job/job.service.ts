@@ -1,13 +1,14 @@
 import pgBossManager, {SqlExecutor} from '@shared/pg-boss-manager';
-import config from "./config";
 import logger from "@shared/logger";
 import sleep from "../../utils/sleep";
 import {KafkaConfig} from "@shared/kafka-manager";
+import type { PgBossConfig } from "@shared/pg-boss-manager";
 
 
 export class JobService {
 
     constructor(
+        private readonly config: PgBossConfig,
         private readonly messageConfig: KafkaConfig,
         private readonly messageProducersConfig: Record<string, string>,
     ) {
@@ -15,7 +16,7 @@ export class JobService {
 
     async start(): Promise<void> {
 
-        void pgBossManager.start(config);
+        void pgBossManager.start(this.config);
 
         await pgBossManager.waitUntilReady();
 
