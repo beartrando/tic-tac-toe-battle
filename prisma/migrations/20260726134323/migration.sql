@@ -7,6 +7,7 @@
 */
 -- AlterTable
 ALTER TABLE "Battle" DROP COLUMN "players",
-DROP COLUMN "winner",
+DROP
+COLUMN "winner",
 ADD COLUMN     "playerIds" TEXT[],
 ADD COLUMN     "winnerId" TEXT;
