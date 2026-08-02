@@ -8,7 +8,8 @@
     "proto:generate": "pnpm exec protoc --plugin=protoc-gen-ts_proto=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=src/contracts/proto --ts_proto_opt=outputServices=grpc-js,useExactTypes=false,esModuleInterop=true --proto_path=../../proto/ ../../proto/*.proto ../../proto/**/*.proto",
     "prisma:generate": "npx prisma generate",
     "start": "node ./dist/app.js",
-    "migrate": "npx prisma migrate dev --name init",
+    "migrate": "prisma migrate dev --name init",
+    "seed": "tsx src/infrastructure/db/seeds/seed.ts",
     "test": "jest"
   },
   "devDependencies": {
@@ -35,6 +36,7 @@
     "@shared/kafka-manager": "workspace:*",
     "@shared/pg-boss-manager": "workspace:*",
     "@shared/logger": "workspace:*",
+    "@shared/errors": "workspace:*",
     "@prisma/client": "^6.19.3",
     "pg-boss": "^12.15.0",
     "kafkajs": "^2.2.4",

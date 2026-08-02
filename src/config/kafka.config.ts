@@ -1,4 +1,5 @@
 import {battleUpdated} from "../lib/consumers";
+import {ConsumerConfig} from "@shared/kafka-manager";
 
 export const kafkaConfig = {
     brokers: (process.env.KAFKA_BROKERS?.split(',') ?? ['kafka:9092']),
@@ -8,11 +9,6 @@ export const kafkaConfig = {
 
 export const kafkaProducersConfig = {
     topicBattleStarted: process.env.KAFKA_TOPIC_BATTLE_STARTED ?? 'battle.started',
-};
-
-type ConsumerConfig = {
-    topic: string;
-    handler: (message: unknown) => Promise<void>;
 };
 
 export const kafkaConsumersConfig: Record<string, ConsumerConfig> = {
