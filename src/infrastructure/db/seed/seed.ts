@@ -1,3 +1,3 @@
-import * as profileSeed from './profile.seed';
+import * as profileSeed from './battle.seed';
 
 profileSeed.seedProfiles();

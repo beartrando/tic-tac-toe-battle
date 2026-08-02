@@ -1,16 +1,19 @@
 import pgBossManager, {SqlExecutor} from '@shared/pg-boss-manager';
-import {config as kafkaConfig, kafkaProducersConfig} from "../message/config";
 import config from "./config";
 import logger from "@shared/logger";
 import sleep from "../../utils/sleep";
+import {KafkaConfig} from "@shared/kafka-manager";
 
 
 export class JobService {
 
-    constructor() {
+    constructor(
+        private readonly messageConfig: KafkaConfig,
+        private readonly messageProducersConfig: Record<string, string>,
+    ) {
     }
 
-    async stop(): Promise<void> {
+    async start(): Promise<void> {
 
         void pgBossManager.start(config);
 
@@ -20,14 +23,14 @@ export class JobService {
     }
 
     async initKafkaBridge(): Promise<void> {
-        const topics = Object.values(kafkaProducersConfig);
+        const topics = Object.values(this.messageProducersConfig);
 
         while (true) {
             try {
                 await Promise.all(
                     topics.map(topic =>
                         pgBossManager.kafka.start(
-                            kafkaConfig,
+                            this.messageConfig,
                             topic,
                         ),
                     ),

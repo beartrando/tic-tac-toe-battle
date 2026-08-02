@@ -1,16 +1,22 @@
 import {createConsumer, createProducer, KafkaConfig, KafkaProducer} from "@shared/kafka-manager";
 import logger from "@shared/logger";
-import {kafkaConsumersConfig,} from './config';
+import {messageConsumersConfig,} from './config';
 import sleep from "../../utils/sleep";
+import UserCreatedConsumer from "./consumers/user-created";
+import BattleUpdatedConsumer from "./consumers/battle-updated";
 
 export class MessageService {
 
     private producer?: KafkaProducer;
 
-    constructor(private readonly config: KafkaConfig) {
+    constructor(
+        private readonly config: KafkaConfig,
+        private readonly consumersConfig: Record<string, string>,
+        private readonly battleUpdatedConsumer: BattleUpdatedConsumer,
+    ) {
     }
 
-    async stop(): Promise<void> {
+    async start(): Promise<void> {
         await this.retryInit(() => this.createConsumers());
     }
 
@@ -43,16 +49,10 @@ export class MessageService {
     }
 
     private async createConsumers(): Promise<void> {
-        const configs = Object.values(kafkaConsumersConfig);
-
-        await Promise.all(
-            configs.map(({topic, handler}) =>
-                createConsumer(this.config, {
-                    topic,
-                    handler,
-                }),
-            ),
-        );
+        createConsumer(this.config, {
+            topic: messageConsumersConfig.userCreated,
+            handler: this.userCreatedConsumer.execute
+        })
     }
 
     private async retryInit(
