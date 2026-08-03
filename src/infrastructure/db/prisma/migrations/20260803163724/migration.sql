@@ -1,2 +1,3 @@
 -- AlterTable
-ALTER TABLE "Battle" ALTER COLUMN "lastMoveAt" DROP NOT NULL;
+ALTER TABLE "Battle"
+    ALTER COLUMN "lastMoveAt" DROP NOT NULL;

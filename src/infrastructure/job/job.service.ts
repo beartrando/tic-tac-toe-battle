@@ -1,8 +1,8 @@
+import type {PgBossConfig} from "@shared/pg-boss-manager";
 import pgBossManager, {SqlExecutor} from '@shared/pg-boss-manager';
 import logger from "@shared/logger";
 import sleep from "../../utils/sleep";
 import {KafkaConfig} from "@shared/kafka-manager";
-import type { PgBossConfig } from "@shared/pg-boss-manager";
 
 
 export class JobService {

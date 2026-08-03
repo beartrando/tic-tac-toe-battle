@@ -1,12 +1,11 @@
 import {BattleObject} from "../../../contracts/proto/battle";
-import Id from "../../../domain/value-objects/id.vo";
 import UpdateUseCase from "../../../application/use-cases/battle/update";
-import logger from "@shared/logger";
 
 export class BattleUpdatedConsumer {
     constructor(
         private readonly updateUseCase: UpdateUseCase,
-    ) {}
+    ) {
+    }
 
     async execute(topic: string, partition: number, message: BattleObject): Promise<void> {
         // try {

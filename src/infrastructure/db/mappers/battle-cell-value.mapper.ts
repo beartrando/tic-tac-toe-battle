@@ -15,8 +15,6 @@ export class BattleCellValueMapper {
             default:
                 throw new Error(`Unknown BattleCellValueEnum: ${cell}`);
         }
-
-
     }
 
     static toDomain(cell: BattleCellValue): BattleCellValueEnum {
@@ -28,7 +26,7 @@ export class BattleCellValueMapper {
             case BattleCellValue.O:
                 return BattleCellValueEnum.O;
             default:
-                throw new Error(`Unknown BattleCellValueEnum: ${cell}`);
+                throw new Error(`Unknown BattleCellValue: ${cell}`);
         }
     }
 

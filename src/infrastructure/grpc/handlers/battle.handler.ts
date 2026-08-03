@@ -1,21 +1,14 @@
 import * as grpc from '@grpc/grpc-js';
-import * as authProto from '../../../contracts/proto/auth';
 import * as profileProto from '../../../contracts/proto/profile';
+import * as battleProto from '../../../contracts/proto/battle';
 import logger from "@shared/logger";
-import GetUseCase from "../../../application/use-cases/profile/get";
-import callbackError, {callbackError} from "./callback.error";
-import AuthService from "../../auth/auth-service";
-import AuthHelper from "../helpers/auth.helper";
-import ProfileGrpcMapper from "../mappers/profile.mapper";
+import GetUseCase from "../../../application/use-cases/battle/get";
+import callbackError from "./callback.error";
+import BattleProtoMapper from "../mappers/battle.proto.mapper";
 import Id from "../../../domain/value-objects/id.vo";
 import {NotFoundError} from "@shared/errors";
-import * as battleProto from '../generated/battle';
-import * as profileProto from '../generated/profile';
-import * as battleService from '../../services/battle.service';
-import {battleToProto} from '../../lib/grpc-prisma-converters/battle';
-import {BattleModel} from "../../models/battle.model";
-import GetActiveByProfileUseCase from "../../../application/use-cases/battle/get-active-by-profile";
 import StartUseCase from "../../../application/use-cases/battle/start";
+import GetActiveByProfileUseCase from "../../../application/use-cases/battle/get-active-by-profile";
 
 
 export class BattleHandler {
@@ -27,19 +20,19 @@ export class BattleHandler {
     }
 
     async get(
-        call: grpc.ServerUnaryCall<profileProto.ProfileIdRequest, profileProto.ProfileResponse>,
-        callback: grpc.sendUnaryData<profileProto.ProfileResponse>
+        call: grpc.ServerUnaryCall<battleProto.BattleIdRequest, battleProto.BattleResponse>,
+        callback: grpc.sendUnaryData<battleProto.BattleResponse>
     ) {
         try {
-            const {profileId} = call.request;
-            // logger.log('getProfileById ' + profileId);
+            const {battleId} = call.request;
+            // logger.log('getBattleById ' + battleId);
 
-            const profile = await this.getUseCase.execute(new Id(profileId));
+            const battle = await this.getUseCase.execute(new Id(battleId));
 
-            const result = profileProto.ProfileResponse.create({profile: ProfileGrpcMapper.toGrpc(profile)});
+            const result = battleProto.BattleResponse.create({battle: BattleProtoMapper.toProto(battle)});
 
             if (!result) {
-                throw new NotFoundError('Profile');
+                throw new NotFoundError('Battle');
             }
 
             callback(null, result);
@@ -52,17 +45,15 @@ export class BattleHandler {
 
 
     async getActiveByProfile(
-        call: grpc.ServerUnaryCall<authProto.UserIdRequest, profileProto.ProfileResponse>,
-        callback: grpc.sendUnaryData<profileProto.ProfileResponse>
+        call: grpc.ServerUnaryCall<profileProto.ProfileIdRequest, battleProto.BattlesResponse>,
+        callback: grpc.sendUnaryData<battleProto.BattlesResponse>
     ) {
         try {
-            const accessToken = AuthHelper.getAccessToken(call);
+            const {profileId} = call.request;
 
-            const userId = this.authService.verifyAccessToken(accessToken);
+            const battle = await this.getActiveByProfileUseCase.execute(new Id(profileId));
 
-            const profile = await this.getOrCreateUseCase.execute(userId);
-
-            const result = profileProto.ProfileResponse.create({profile: ProfileGrpcMapper.toGrpc(profile)});
+            const result = battleProto.BattlesResponse.create({battles: {items: [...battle].map(BattleProtoMapper.toProto)}});
 
             callback(null, result);
 
@@ -73,21 +64,19 @@ export class BattleHandler {
     }
 
     async start(
-        call: grpc.ServerUnaryCall<profileProto.ProfileIdRequest, profileProto.ProfileResponse>,
-        callback: grpc.sendUnaryData<profileProto.ProfileResponse>
+        call: grpc.ServerUnaryCall<battleProto.BattleStartRequest, battleProto.BattleResponse>,
+        callback: grpc.sendUnaryData<battleProto.BattleResponse>
     ) {
 
         try {
-            const accessToken = AuthHelper.getAccessToken(call);
+            const {profileId, battleId} = call.request;
 
-            const userId = this.authService.verifyAccessToken(accessToken);
+            const battle = await this.startUseCase.execute(new Id(profileId), new Id(battleId));
 
-            const profile = await this.getMeUseCase.execute(userId);
-
-            const result = profileProto.ProfileResponse.create({profile: ProfileGrpcMapper.toGrpc(profile)});
+            const result = battleProto.BattleResponse.create({battle: BattleProtoMapper.toProto(battle)});
 
             if (!result) {
-                throw new NotFoundError('Profile');
+                throw new NotFoundError('Battle');
             }
 
             callback(null, result);

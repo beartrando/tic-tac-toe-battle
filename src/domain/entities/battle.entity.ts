@@ -43,7 +43,7 @@ export class BattleEntity {
         );
     }
 
-    static createByProfile(profileId: Id): BattleEntity {
+    static createNew(profileId: Id): BattleEntity {
         return BattleEntity.create({playerIds: new PlayerIds([profileId])});
     }
 

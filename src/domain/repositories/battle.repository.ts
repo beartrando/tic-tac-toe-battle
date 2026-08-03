@@ -1,6 +1,5 @@
 import BattleEntity from "../entities/battle.entity";
 import Id from "../value-objects/id.vo";
-import {Battle} from "@prisma/client";
 
 export interface BattleRepository {
 

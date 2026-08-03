@@ -1,6 +1,4 @@
-import {
-    BattleStatus as PrismaBattleStatus,
-} from "@prisma/client";
+import {BattleStatus as PrismaBattleStatus,} from "@prisma/client";
 
 import BattleStatus from "../../../domain/value-objects/battle-status.vo";
 import BattleStatusEnum from "../../../domain/enums/battle-status.enum";
@@ -11,9 +9,14 @@ export class BattleStatusMapper {
         status: BattleStatus,
     ): PrismaBattleStatus {
         switch (status.value) {
-            case BattleStatusEnum.New: return PrismaBattleStatus.New;
-            case BattleStatusEnum.Active: return PrismaBattleStatus.Active;
-            case BattleStatusEnum.Finished: return PrismaBattleStatus.Finished;
+            case BattleStatusEnum.New:
+                return PrismaBattleStatus.New;
+            case BattleStatusEnum.Active:
+                return PrismaBattleStatus.Active;
+            case BattleStatusEnum.Finished:
+                return PrismaBattleStatus.Finished;
+            default:
+                throw new Error(`Unknown BattleStatus: ${status.value}`);
         }
     }
 
@@ -21,9 +24,14 @@ export class BattleStatusMapper {
         status: PrismaBattleStatus,
     ): BattleStatus {
         switch (status) {
-            case PrismaBattleStatus.New: return new BattleStatus(BattleStatusEnum.New);
-            case PrismaBattleStatus.Active: return new BattleStatus(BattleStatusEnum.Active);
-            case PrismaBattleStatus.Finished: return new BattleStatus(BattleStatusEnum.Finished);
+            case PrismaBattleStatus.New:
+                return new BattleStatus(BattleStatusEnum.New);
+            case PrismaBattleStatus.Active:
+                return new BattleStatus(BattleStatusEnum.Active);
+            case PrismaBattleStatus.Finished:
+                return new BattleStatus(BattleStatusEnum.Finished);
+            default:
+                throw new Error(`Unknown PrismaBattleStatus: ${status}`);
         }
     }
 }

@@ -23,4 +23,5 @@ export class Board {
         );
     }
 }
+
 export default Board;

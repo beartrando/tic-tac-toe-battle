@@ -1,4 +1,4 @@
-import {Battle, BattleStatus, PrismaClient} from "@prisma/client";
+import {BattleStatus, PrismaClient} from "@prisma/client";
 
 import BattleRepository from "../../../domain/repositories/battle.repository";
 import BattleEntity from "../../../domain/entities/battle.entity";

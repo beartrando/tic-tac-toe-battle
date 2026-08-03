@@ -1,5 +1,3 @@
-import {ConsumerConfig} from "@shared/kafka-manager";
-
 export const config = {
     brokers: (process.env.KAFKA_BROKERS?.split(',') ?? ['kafka:9092']),
     clientId: process.env.KAFKA_CLIENT_ID ?? 'battle-client',
