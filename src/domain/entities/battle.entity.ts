@@ -2,6 +2,7 @@ import Id from "../value-objects/id.vo";
 import Board from "../value-objects/board.vo";
 import PlayerIds from "../value-objects/player-ids.vo";
 import BattleStatus from "../value-objects/battle-status.vo";
+import BattleStatusEnum from "../enums/battle-status.enum";
 
 type BattleEntityProps = {
     id?: Id;
@@ -24,24 +25,28 @@ export class BattleEntity {
         readonly lastMoveAt: Date | null,
         readonly createdAt: Date,
         readonly updatedAt: Date,
-    ) {}
+    ) {
+    }
 
-    static create(
-        props: BattleEntityProps,
-    ): BattleEntity {
+    static create(props: BattleEntityProps): BattleEntity {
         const now = new Date();
 
         return new BattleEntity(
             props.id ?? Id.create(),
             props.playerIds,
             props.board ?? Board.empty(),
-            props.status ?? BattleStatus.New,
+            props.status ?? new BattleStatus(BattleStatusEnum.New),
             props.winnerId ?? null,
             props.lastMoveAt ?? null,
             props.createdAt ?? now,
             props.updatedAt ?? now,
         );
     }
+
+    static createByProfile(profileId: Id): BattleEntity {
+        return BattleEntity.create({playerIds: new PlayerIds([profileId])});
+    }
+
 }
 
 export default BattleEntity;

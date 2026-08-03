@@ -10,34 +10,20 @@ export class BattleStatusMapper {
     static toPersistence(
         status: BattleStatus,
     ): PrismaBattleStatus {
-
         switch (status.value) {
-
-            case BattleStatusEnum.New:
-                return PrismaBattleStatus.New;
-
-            case BattleStatusEnum.Active:
-                return PrismaBattleStatus.Active;
-
-            case BattleStatusEnum.Finished:
-                return PrismaBattleStatus.Finished;
+            case BattleStatusEnum.New: return PrismaBattleStatus.New;
+            case BattleStatusEnum.Active: return PrismaBattleStatus.Active;
+            case BattleStatusEnum.Finished: return PrismaBattleStatus.Finished;
         }
     }
 
     static toDomain(
         status: PrismaBattleStatus,
     ): BattleStatus {
-
         switch (status) {
-
-            case PrismaBattleStatus.New:
-                return BattleStatus.New;
-
-            case PrismaBattleStatus.Active:
-                return BattleStatus.Active;
-
-            case PrismaBattleStatus.Finished:
-                return BattleStatus.Finished;
+            case PrismaBattleStatus.New: return new BattleStatus(BattleStatusEnum.New);
+            case PrismaBattleStatus.Active: return new BattleStatus(BattleStatusEnum.Active);
+            case PrismaBattleStatus.Finished: return new BattleStatus(BattleStatusEnum.Finished);
         }
     }
 }

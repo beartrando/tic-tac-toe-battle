@@ -8,8 +8,8 @@ export class GetActiveByProfileUseCase {
     ) {
     }
 
-    async execute(profileId: Id): Promise<BattleEntity> {
-        const battles = await this.battleRepository.findFirstActiveByProfileId(profileId);
+    async execute(profileId: Id): Promise<Set<BattleEntity>> {
+        const battles = await this.battleRepository.findActiveByProfileId(profileId);
 
         if (!battles) {
             throw new Error("Battles don't not exist");

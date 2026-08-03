@@ -1,53 +1,35 @@
-import {
-    BattleCellValue as PrismaBattleCellValue,
-} from "@prisma/client";
+import {BattleCellValue} from "@prisma/client";
 
 import BattleCellValueEnum from "../../../domain/enums/battle-cell-value.enum";
 
 export class BattleCellValueMapper {
 
-    static toPersistence(
-        cells: readonly BattleCellValueEnum[],
-    ): PrismaBattleCellValue[] {
+    static toPersistence(cell: BattleCellValueEnum): BattleCellValue {
+        switch (cell) {
+            case BattleCellValueEnum.EMPTY:
+                return BattleCellValue.EMPTY;
+            case BattleCellValueEnum.X:
+                return BattleCellValue.X;
+            case BattleCellValueEnum.O:
+                return BattleCellValue.O;
+            default:
+                throw new Error(`Unknown BattleCellValueEnum: ${cell}`);
+        }
 
-        return cells.map(cell => {
-
-            switch (cell) {
-
-                case BattleCellValueEnum.EMPTY:
-                    return PrismaBattleCellValue.EMPTY;
-
-                case BattleCellValueEnum.X:
-                    return PrismaBattleCellValue.X;
-
-                case BattleCellValueEnum.O:
-                    return PrismaBattleCellValue.O;
-            }
-
-        });
 
     }
 
-    static toDomain(
-        cells: readonly PrismaBattleCellValue[],
-    ): BattleCellValueEnum[] {
-
-        return cells.map(cell => {
-
-            switch (cell) {
-
-                case PrismaBattleCellValue.EMPTY:
-                    return BattleCellValueEnum.EMPTY;
-
-                case PrismaBattleCellValue.X:
-                    return BattleCellValueEnum.X;
-
-                case PrismaBattleCellValue.O:
-                    return BattleCellValueEnum.O;
-            }
-
-        });
-
+    static toDomain(cell: BattleCellValue): BattleCellValueEnum {
+        switch (cell) {
+            case BattleCellValue.EMPTY:
+                return BattleCellValueEnum.EMPTY;
+            case BattleCellValue.X:
+                return BattleCellValueEnum.X;
+            case BattleCellValue.O:
+                return BattleCellValueEnum.O;
+            default:
+                throw new Error(`Unknown BattleCellValueEnum: ${cell}`);
+        }
     }
 
 }

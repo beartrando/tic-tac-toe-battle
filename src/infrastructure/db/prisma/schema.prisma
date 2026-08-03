@@ -24,10 +24,10 @@ enum BattleStatus {
 model Battle {
   id         String            @id @default(uuid())
   playerIds  String[]
-  cells      BattleCellValue[]
+  board      BattleCellValue[]
   status     BattleStatus
   winnerId   String?
-  lastMoveAt DateTime          @default(now())
+  lastMoveAt DateTime?         @default(now())
   createdAt  DateTime          @default(now())
   updatedAt  DateTime          @updatedAt
 }

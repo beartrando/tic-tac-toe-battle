@@ -10,9 +10,9 @@ export interface BattleRepository {
 
     findActiveByProfileId(profileId: Id): Promise<Set<BattleEntity> | null>;
 
-    join(profileId: Id, battleId?: Id | null): Promise<BattleEntity | null>;
+    join(profileId: Id, battleId: Id): Promise<BattleEntity | null>;
 
-    findAvailableBattle(profileId: Id): Promise<Battle | null>;
+    findAvailableBattle(profileId: Id): Promise<BattleEntity | null>;
 }
 
 export default BattleRepository;

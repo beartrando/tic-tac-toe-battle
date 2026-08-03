@@ -1,8 +1,9 @@
 import BattleRepository from "../../../domain/repositories/battle.repository";
 import BattleEntity from "../../../domain/entities/battle.entity";
 import Id from "../../../domain/value-objects/id.vo";
+import PlayerIds from "../../../domain/value-objects/player-ids.vo";
 import JobService from "../../../infrastructure/job/job.service";
-import logger from "@shared/logger";
+import {NotFoundError} from "@shared/errors";
 
 export class StartUseCase {
     constructor(
@@ -13,122 +14,45 @@ export class StartUseCase {
     }
 
     async execute(profileId: Id, battleId?: Id | null): Promise<BattleEntity> {
-
-        const existingMyBattle = await BattleModel.findBattleByProfile(profileId);
-
-        // logger.log('upsert battle for profile: ', profileId);
-
-        if (existingMyBattle) {
-            return existingMyBattle;
-        }
-
-        let attempts = 3;
-
-        while (attempts > 0) {
-            const existingSomebodiesBattle = await BattleModel.findAvailableBattle(profileId);
-
-            if (existingSomebodiesBattle) {
-                try {
-
-                    return await BattleModel.joinBattle(existingSomebodiesBattle.id, profileId);
-                } catch (e) {
-                    logger.log(e);
-                    // await pgBossManager.queue.enqueueTx(messageProducersConfig.battleStarted, battleToProto(battle), tx);
-
-                    // export const makeMove = (move: engineProto.BattleMoveRequest): Promise<emptyProto.Empty | null> => {
-                    //   return engineManager.call((client, cb) => client.battleMove(move, cb));
-                    // };
-                }
-                attempts--;
-                continue;
+        if (battleId) {
+            try {
+                const battle = await this.battleRepository.join(profileId, battleId);
+            } catch (e) {
+                throw new NotFoundError('battle ' + battleId.value);
             }
 
+            if (!battle) {
+                throw new NotFoundError('battle ' + battleId.value);
+            }
 
-            return BattleModel.createBattle(profileId);
-        }
-
-        return BattleModel.createBattle(profileId);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        const battle = await BattleModel.get(battleId);
-
-        if (!battle) {
-            throw new Error(`Battle ${battleId} not found.`);
-        }
-
-        if (battle.playerIds.includes(profileId)) {
             return battle;
         }
 
+        const existingMyBattles = await this.battleRepository.findActiveByProfileId(profileId);
 
-        try {
-            return await BattleModel.joinBattle(battleId, profileId);
-        } catch (e) {
-            logger.log(e);
+        if (existingMyBattles && existingMyBattles.size > 0) {
+            return existingMyBattles.values().next().value;
         }
 
-        return await BattleModel.get(battleId);
+        for (let attempts = 0; attempts < 3; attempts++) {
+            const existingSomebodiesBattle = await this.battleRepository.findAvailableBattle(profileId);
 
+            if (!existingSomebodiesBattle) {
+                break;
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        const existing = await this.battleRepository.findActiveByProfileId(profileId);
-
-        if (existing) {
-            return existing;
+            try {
+                const battle = await this.battleRepository.join(profileId, existingSomebodiesBattle.id);
+                if (battle) {
+                    return battle;
+                }
+            } catch (e) {
+                // logger.log(e);
+            }
         }
 
-        const battle = BattleEntity.create({profileId});
-
-        await this.battleRepository.save(battle);
-
-        return battle;
-
-
-
-
-
-
-
-
-
-
-        // const userId = this.authService.verifyAccessToken(accessToken)
-
-        const battle = await this.battleRepository.findByUserId(profileId, battleId);
-
-        if (!profile) {
-            throw new Error("Profile does not exist");
-        }
-
-        this.jobService.enqueue(this.battleStartedTopik, battle);
-
-        return profile;
+        const battle = BattleEntity.create({playerIds: new PlayerIds([profileId])});
+        return await this.battleRepository.save(battle);
     }
 }
 

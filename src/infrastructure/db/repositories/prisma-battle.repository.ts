@@ -1,4 +1,4 @@
-import {Battle, PrismaClient} from "@prisma/client";
+import {Battle, BattleStatus, PrismaClient} from "@prisma/client";
 
 import BattleRepository from "../../../domain/repositories/battle.repository";
 import BattleEntity from "../../../domain/entities/battle.entity";
@@ -74,6 +74,24 @@ export class PrismaBattleRepository implements BattleRepository {
 
 
     async join(profileId: Id, battleId: Id): Promise<BattleEntity | null> {
+
+        const updated = await this.prisma.battle.updateMany({
+            where: {
+                id: battleId.value,
+                status: BattleStatus.New,
+            },
+            data: {
+                playerIds: {
+                    push: profileId.value,
+                },
+                status: BattleStatus.Active,
+            },
+        });
+
+        if (updated.count === 0) {
+            return null;
+        }
+
         const battle = await this.prisma.battle.findUnique({
             where: {
                 id: battleId.value,
@@ -81,39 +99,27 @@ export class PrismaBattleRepository implements BattleRepository {
         });
 
         if (!battle) {
-            return null;
+            throw new Error("Battle disappeared after successful update.");
         }
 
-        if (battle.playerIds.length >= 2) {
-            return null;
-        }
-
-        if (battle.playerIds.includes(profileId.value)) {
-            return BattleDbMapper.toDomain(battle);
-        }
-
-        const updated = await this.prisma.battle.update({
-            where: {
-                id: battle.id,
-                playerIds.length < 2
-            },
-            data: {
-                playerIds: {
-                    push: profileId.value,
-                },
-            },
-        });
-
-        return BattleDbMapper.toDomain(updated);
+        return BattleDbMapper.toDomain(battle);
     }
 
-    findAvailableBattle(profileId: Id): Promise<Battle | null> {
+    async findAvailableBattle(profileId: Id): Promise<BattleEntity | null> {
 
-        const battle = await this.prisma.battle.findUnique({
-            where: {profileId: profileId.value},
+        const battle = await this.prisma.battle.findFirst({
+            where: {
+                status: BattleStatus.New,
+                NOT: {
+                    playerIds: {
+                        has: profileId.value,
+                    },
+                },
+            },
+            orderBy: {
+                createdAt: "asc",
+            },
         });
-
-
 
         if (!battle) {
             return null;
@@ -121,7 +127,6 @@ export class PrismaBattleRepository implements BattleRepository {
 
         return BattleDbMapper.toDomain(battle);
     }
-
 }
 
 export default PrismaBattleRepository;
