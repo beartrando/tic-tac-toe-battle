@@ -21,7 +21,7 @@ export class BattleEntity {
         readonly board: Board,
         readonly status: BattleStatus,
         readonly winnerId: Id | null,
-        readonly lastMoveAt: Date,
+        readonly lastMoveAt: Date | null,
         readonly createdAt: Date,
         readonly updatedAt: Date,
     ) {}

@@ -21,7 +21,7 @@ export class ProfileGrpcMapper {
         });
     }
 
-    // static toEntity(user: authProto.UserObject): BattleEntity {
+    // static toDomain(user: authProto.UserObject): BattleEntity {
     //
     //     return BattleEntity.create({
     //         id: new Id(user.id),

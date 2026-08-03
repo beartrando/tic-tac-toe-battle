@@ -27,7 +27,7 @@ export class PrismaBattleRepository implements BattleRepository {
             return null;
         }
 
-        return BattleDbMapper.toEntity(battle);
+        return BattleDbMapper.toDomain(battle);
     }
 
     async save(
@@ -51,7 +51,7 @@ export class PrismaBattleRepository implements BattleRepository {
             update,
         });
 
-        return BattleDbMapper.toEntity(result);
+        return BattleDbMapper.toDomain(result);
     }
 
     async findActiveByProfileId(
@@ -67,7 +67,7 @@ export class PrismaBattleRepository implements BattleRepository {
             return null;
         }
 
-        return BattleDbMapper.toEntity(battle);
+        return BattleDbMapper.toDomain(battle);
     }
 
 
@@ -84,7 +84,7 @@ export class PrismaBattleRepository implements BattleRepository {
             return null;
         }
 
-        return BattleDbMapper.toEntity(battle);
+        return BattleDbMapper.toDomain(battle);
     }
 
     findAvailableBattle(profileId: Id): Promise<Battle | null> {
@@ -98,7 +98,7 @@ export class PrismaBattleRepository implements BattleRepository {
             return null;
         }
 
-        return BattleDbMapper.toEntity(battle);
+        return BattleDbMapper.toDomain(battle);
     }
 
 }
