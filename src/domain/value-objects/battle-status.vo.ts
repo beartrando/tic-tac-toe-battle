@@ -1,7 +1,7 @@
 import BattleStatusEnum from "../enums/battle-status.enum";
 
 export class BattleStatus {
-    private constructor(
+    constructor(
         readonly value: BattleStatusEnum,
     ) {}
 

@@ -17,7 +17,7 @@ export class BattleDbMapper {
 
         return {
             id: battle.id.value,
-            playerIds: battle.playerIds.values.map(id => id.value),
+            playerIds: battle.playerIds.value.map(id => id.value),
             cells: battle.board.cells as BattleCellValue[],
             status: battle.status as PrismaBattleStatus,
             winnerId: battle.winnerId?.value ?? null,

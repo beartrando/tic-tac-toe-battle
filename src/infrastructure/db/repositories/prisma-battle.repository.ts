@@ -37,9 +37,6 @@ export class PrismaBattleRepository implements BattleRepository {
         const battleDb = BattleDbMapper.toPersistence(battle);
         const {
             id,
-            userId,
-            // createdAt,
-            // updatedAt,
             ...update
         } = battleDb;
 
@@ -58,40 +55,64 @@ export class PrismaBattleRepository implements BattleRepository {
         profileId: Id,
     ): Promise<Set<BattleEntity> | null> {
 
-        const battle = await this.prisma.battle.findUnique({
-            where: {userId: userId.value},
+        const battles = await this.prisma.battle.findMany({
+            where: {
+                playerIds: {
+                    has: profileId.value,
+                },
+            },
         });
 
-
-        if (!battle) {
+        if (battles.length === 0) {
             return null;
         }
 
-        return BattleDbMapper.toDomain(battle);
+        return new Set(
+            battles.map(BattleDbMapper.toDomain),
+        );
     }
 
 
-    async join(
-        profileId: Id, battleId?: Id | null
-    ): Promise<BattleEntity | null> {
-
+    async join(profileId: Id, battleId: Id): Promise<BattleEntity | null> {
         const battle = await this.prisma.battle.findUnique({
-            where: {userId: userId.value},
+            where: {
+                id: battleId.value,
+            },
         });
-
 
         if (!battle) {
             return null;
         }
 
-        return BattleDbMapper.toDomain(battle);
+        if (battle.playerIds.length >= 2) {
+            return null;
+        }
+
+        if (battle.playerIds.includes(profileId.value)) {
+            return BattleDbMapper.toDomain(battle);
+        }
+
+        const updated = await this.prisma.battle.update({
+            where: {
+                id: battle.id,
+                playerIds.length < 2
+            },
+            data: {
+                playerIds: {
+                    push: profileId.value,
+                },
+            },
+        });
+
+        return BattleDbMapper.toDomain(updated);
     }
 
     findAvailableBattle(profileId: Id): Promise<Battle | null> {
 
         const battle = await this.prisma.battle.findUnique({
-            where: {userId: userId.value},
+            where: {profileId: profileId.value},
         });
+
 
 
         if (!battle) {
