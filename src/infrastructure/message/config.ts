@@ -4,7 +4,7 @@ export const config = {
     groupId: process.env.KAFKA_GROUP_ID ?? 'battle-service',
 };
 
-export const messageProducersConfig = {
+export const messageProducersConfig: Record<string, string> = {
     battleStarted: process.env.MESSAGE_TOPIC_BATTLE_STARTED ?? 'battle.started',
 };
 
