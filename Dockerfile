@@ -113,4 +113,4 @@ LABEL org.opencontainers.image.version="$VERSION"
 
 WORKDIR /usr/src/app/services/battle
 
-CMD ["pnpm", "--filter", "battle", "migrate:reset"]
+CMD ["pnpm", "--filter", "battle", "migrate:deploy"]
