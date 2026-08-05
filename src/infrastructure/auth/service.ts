@@ -1,4 +1,4 @@
-import jwt, {JwtPayload, SignOptions} from "jsonwebtoken";
+import jwt, {JwtPayload} from "jsonwebtoken";
 
 import AccessToken from "../../domain/value-objects/access-token.vo";
 

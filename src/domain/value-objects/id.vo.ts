@@ -5,7 +5,7 @@ export class Id {
         readonly value: string,
     ) {
         if (!value) {
-            throw new Error("Id cannot be empty");
+            throw new Error("DeviceId cannot be empty");
         }
     }
 
