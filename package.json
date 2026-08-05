@@ -10,7 +10,7 @@
     "start": "node ./dist/app.js",
     "migrate": "prisma migrate dev",
     "migrate:deploy": "prisma migrate deploy",
-    "migrate:reset": "prisma migrate reset",
+    "migrate:reset": "prisma migrate reset --force",
     "seed": "tsx src/infrastructure/db/seeds/seed.ts",
     "test": "jest"
   },
