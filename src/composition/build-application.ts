@@ -22,7 +22,8 @@ import StartUseCase from "../application/use-cases/battle/start";
 import BattleHandler from "../infrastructure/grpc/handlers/battle.handler";
 import BattleUpdatedConsumer from "../infrastructure/message/consumers/battle-updated";
 import UpdateUseCase from "../application/use-cases/battle/update";
-import {config as authConfig} from "../infrastructure/auth/config";
+// import {config as authConfig} from "../infrastructure/auth/config";
+// import AuthService from "../infrastructure/auth/service";
 
 
 function buildApplication() {
@@ -31,7 +32,7 @@ function buildApplication() {
 
     const dbService = new DbService();
 
-    const authService = new AuthService(authConfig);
+    // const authService = new AuthService(authConfig);
 
     const battleRepository = new PrismaBattleRepository(dbService.client);
 
