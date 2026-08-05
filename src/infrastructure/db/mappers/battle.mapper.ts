@@ -27,7 +27,7 @@ export class BattleDbMapper {
     static toDomain(battle: Battle): BattleEntity {
         return BattleEntity.create({
             id: new Id(battle.id),
-            playerIds: new PlayerIds(battle.playerIds.map(id => new Id(id))),
+            playerIds: new PlayerIds(battle.playerIds.map((id: string) => new Id(id))),
             board: BattleBoardMapper.toDomain(battle.board),
             status: BattleStatusMapper.toDomain(battle.status),
             winnerId: battle.winnerId ? new Id(battle.winnerId) : null,
