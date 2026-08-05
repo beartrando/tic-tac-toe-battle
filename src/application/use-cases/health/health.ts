@@ -1,7 +1,7 @@
 import * as healthProto from "../../../contracts/proto/common/health";
-import {MessageService} from "../../../infrastructure/message/message.service";
-import {DbService} from "../../../infrastructure/db/db.service";
-import {JobService} from "../../../infrastructure/job/job.service";
+import {MessageService} from "../../../infrastructure/message/service";
+import {DbService} from "../../../infrastructure/db/service";
+import {JobService} from "../../../infrastructure/job/service";
 import config from "../../../infrastructure/app/config";
 
 export class HealthUseCase {

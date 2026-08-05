@@ -1,8 +1,8 @@
 import logger from "@shared/logger";
-import GrpcService from "../infrastructure/grpc/grpc.service";
-import DbService from "../infrastructure/db/db.service";
-import JobService from "../infrastructure/job/job.service";
-import MessageService from "../infrastructure/message/message.service";
+import GrpcService from "../infrastructure/grpc/service";
+import DbService from "../infrastructure/db/service";
+import JobService from "../infrastructure/job/service";
+import MessageService from "../infrastructure/message/service";
 
 export class Application {
     constructor(

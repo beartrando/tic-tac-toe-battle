@@ -1,7 +1,7 @@
 import BattleRepository from "../../../domain/repositories/battle.repository";
 import BattleEntity from "../../../domain/entities/battle.entity";
 import Id from "../../../domain/value-objects/id.vo";
-import JobService from "../../../infrastructure/job/job.service";
+import JobService from "../../../infrastructure/job/service";
 import {NotFoundError} from "@shared/errors";
 
 export class StartUseCase {
