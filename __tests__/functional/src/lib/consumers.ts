@@ -1,7 +1,7 @@
 // import crypto from "crypto";
 // import {prisma} from "../utils/prisma";
 // import {battleUpdated} from "../services/battleUpdated";
-// import {BattleCellValue, BattleStatus} from "@prisma/client";
+// import {BattleCellValue, Status} from "@prisma/client";
 //
 // let userId1: string;
 //
@@ -20,7 +20,7 @@
 //         data: {
 //             players: [userId1],
 //             playersCount: 1,
-//             status: BattleStatus.Active,
+//             status: Status.Active,
 //         },
 //     });
 //
@@ -28,7 +28,7 @@
 //     const message = {
 //         id: battle.id,
 //         cells: [BattleCellValue.CELL_X, BattleCellValue.CELL_O],
-//         status: BattleStatus.Finished,
+//         status: Status.Finished,
 //         winner: userId1,
 //     };
 //
@@ -36,7 +36,7 @@
 //
 //     const updated = await prisma.battle.findUnique({where: {id: battle.id}});
 //
-//     expect(updated?.status).toBe(BattleStatus.Finished);
+//     expect(updated?.status).toBe(Status.Finished);
 //     expect(updated?.winner).toBe(userId1);
 //     expect(updated?.cells).toEqual(["X", "O"]);
 // });
@@ -46,7 +46,7 @@
 //     const message = {
 //         id: crypto.randomUUID(),
 //         cells: [],
-//         status: BattleStatus.Active,
+//         status: Status.Active,
 //         winner: null,
 //         userId: userId1,
 //     };

@@ -2,9 +2,9 @@ import {Battle} from "@prisma/client";
 
 import BattleEntity from "../../../domain/entities/battle.entity";
 import Id from "../../../domain/value-objects/id.vo";
-import PlayerIds from "../../../domain/value-objects/player-ids.vo";
-import BattleStatusMapper from "./battle-status.mapper";
-import BattleBoardMapper from "./battle-board.mapper";
+import PlayerIds from "../../../domain/value-objects/battle/player-ids.vo";
+import BattleStatusMapper from "./battle/status.mapper";
+import BattleBoardMapper from "./battle/board.mapper";
 
 type BattleSaveData = Omit<
     Battle,
@@ -16,7 +16,7 @@ export class BattleDbMapper {
     static toPersistence(battle: BattleEntity): BattleSaveData {
         return {
             id: battle.id.value,
-            playerIds: battle.playerIds.value.map(id => id.value),
+            playerIds: battle.playerIds.value.map((id: Id) => id.value),
             board: BattleBoardMapper.toPersistence(battle.board),
             status: BattleStatusMapper.toPersistence(battle.status),
             winnerId: battle.winnerId?.value ?? null,

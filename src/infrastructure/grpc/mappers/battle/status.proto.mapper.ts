@@ -1,8 +1,8 @@
-import * as battleProto from "../../../contracts/proto/battle";
-import BattleStatus from "../../../domain/value-objects/battle-status.vo";
-import BattleStatusEnum from "../../../domain/enums/battle-status.enum";
+import * as battleProto from "../../../../contracts/proto/battle";
+import BattleStatus from "../../../../domain/value-objects/battle/status.vo";
+import BattleStatusEnum from "../../../../domain/enums/battle/status.enum";
 
-export class BattleStatusProtoMapper {
+export class StatusProtoMapper {
 
     static toProto(
         status: BattleStatus,
@@ -21,14 +21,14 @@ export class BattleStatusProtoMapper {
 
     // static toDomain(
     //     status: PrismaBattleStatus,
-    // ): BattleStatus {
+    // ): Status {
     //     switch (status) {
-    //         case PrismaBattleStatus.New: return new BattleStatus(BattleStatusEnum.New);
-    //         case PrismaBattleStatus.Active: return new BattleStatus(BattleStatusEnum.Active);
-    //         case PrismaBattleStatus.Finished: return new BattleStatus(BattleStatusEnum.Finished);
+    //         case PrismaBattleStatus.New: return new Status(StatusEnum.New);
+    //         case PrismaBattleStatus.Active: return new Status(StatusEnum.Active);
+    //         case PrismaBattleStatus.Finished: return new Status(StatusEnum.Finished);
     //         default: throw new Error(`Unknown PrismaBattleStatus: ${status}`);
     //     }
     // }
 }
 
-export default BattleStatusProtoMapper;
+export default StatusProtoMapper;

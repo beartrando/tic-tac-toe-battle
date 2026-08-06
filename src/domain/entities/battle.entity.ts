@@ -1,8 +1,8 @@
 import Id from "../value-objects/id.vo";
-import Board from "../value-objects/board.vo";
-import PlayerIds from "../value-objects/player-ids.vo";
-import BattleStatus from "../value-objects/battle-status.vo";
-import BattleStatusEnum from "../enums/battle-status.enum";
+import Board from "../value-objects/battle/board.vo";
+import PlayerIds from "../value-objects/battle/player-ids.vo";
+import BattleStatus from "../value-objects/battle/status.vo";
+import BattleStatusEnum from "../enums/battle/status.enum";
 
 type BattleEntityProps = {
     id?: Id;

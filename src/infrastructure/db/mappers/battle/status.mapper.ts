@@ -1,7 +1,7 @@
 import {BattleStatus as PrismaBattleStatus,} from "@prisma/client";
 
-import BattleStatus from "../../../domain/value-objects/battle-status.vo";
-import BattleStatusEnum from "../../../domain/enums/battle-status.enum";
+import BattleStatus from "../../../../domain/value-objects/battle/status.vo";
+import BattleStatusEnum from "../../../../domain/enums/battle/status.enum";
 
 export class BattleStatusMapper {
 
