@@ -8,11 +8,11 @@ export class BattleBoardProtoMapper {
         return board.cells.map(BattleCellValueProtoMapper.toProto);
     }
 
-    // static toDomain(
-    //     cells: readonly BattleCellValue[],
-    // ): Board {
-    //     return new Board(cells.map(BattleCellValueProtoMapper.toDomain));
-    // }
+    static toDomain(
+        cells: readonly battleProto.BattleCellValue[],
+    ): Board {
+        return new Board(cells.map(BattleCellValueProtoMapper.toDomain));
+    }
 }
 
 export default BattleBoardProtoMapper;

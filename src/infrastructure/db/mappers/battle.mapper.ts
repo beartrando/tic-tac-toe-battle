@@ -39,3 +39,4 @@ export class BattleDbMapper {
 }
 
 export default BattleDbMapper;
+
