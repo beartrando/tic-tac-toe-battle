@@ -4,17 +4,16 @@ import LivezUseCase from "../application/use-cases/health/livez";
 import ReadyzUseCase from "../application/use-cases/health/readyz";
 import HealthHandler from "../infrastructure/grpc/handlers/health.handler";
 import GrpcService from "../infrastructure/grpc/service";
-import {config as grpcConfig} from "../infrastructure/grpc/config";
+import {grpcConfig as grpcConfig} from "../infrastructure/grpc/config";
 import Application from "../application/application";
 import MessageService from "../infrastructure/message/service";
 import JobService from "../infrastructure/job/service";
 import DbService from "../infrastructure/db/service";
-import {
-    config as messageConfig,
+import {messageConfig,
     messageConsumersConfig,
     messageProducersConfig
 } from "../infrastructure/message/config";
-import {config as jobConfig} from "../infrastructure/job/config";
+import jobConfig from "../infrastructure/job/config";
 import PrismaBattleRepository from "../infrastructure/db/repositories/prisma-battle.repository";
 import GetUseCase from "../application/use-cases/battle/get";
 import GetActiveByProfileUseCase from "../application/use-cases/battle/get-active-by-profile";

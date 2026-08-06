@@ -1,5 +1,5 @@
-export const config = {
+export const grpcConfig = {
     port: Number(process.env.GRPC_PORT) ?? 50051,
 };
 
-export default config;
+export default grpcConfig;
