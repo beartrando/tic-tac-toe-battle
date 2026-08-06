@@ -1,5 +1,5 @@
 import * as healthProto from "../../../contracts/proto/common/health";
-import config from "../../../infrastructure/app/config";
+import appConfig from "../../../infrastructure/app/appConfig";
 
 const startedAt = Date.now();
 
@@ -8,9 +8,9 @@ export class StatusUseCase {
         const uptimeMs = Date.now() - startedAt;
 
         return {
-            name: config.appName,
-            version: config.appVersion,
-            env: config.appEnv,
+            name: appConfig.appName,
+            version: appConfig.appVersion,
+            env: appConfig.appEnv,
             uptime: {
                 seconds: Math.floor(uptimeMs / 1000),
                 nanos: (uptimeMs % 1000) * 1_000_000,

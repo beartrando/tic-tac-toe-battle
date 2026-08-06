@@ -6,8 +6,8 @@ function required(name: string): string {
     return value;
 }
 
-export const config = {
+export const authConfig = {
     accessSecret: required("ACCESS_SECRET"),
 };
 
-export default config;
+export default authConfig;

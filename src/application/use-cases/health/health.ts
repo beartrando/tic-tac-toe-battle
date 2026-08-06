@@ -2,7 +2,7 @@ import * as healthProto from "../../../contracts/proto/common/health";
 import {MessageService} from "../../../infrastructure/message/service";
 import {DbService} from "../../../infrastructure/db/service";
 import {JobService} from "../../../infrastructure/job/service";
-import config from "../../../infrastructure/app/config";
+import appConfig from "../../../infrastructure/app/appConfig";
 
 export class HealthUseCase {
     constructor(
@@ -22,7 +22,7 @@ export class HealthUseCase {
         };
 
         return {
-            service: config.appName,
+            service: appConfig.appName,
             status: this.toHealthStatus(
                 Object.values(components).every(Boolean),
             ),
