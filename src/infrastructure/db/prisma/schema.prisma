@@ -15,7 +15,7 @@ enum BattleCellValue {
   EMPTY
 }
 
-enum Status {
+enum BattleStatus {
   New
   Active
   Finished
