@@ -1,7 +1,7 @@
 /*
   Warnings:
 
-  - You are about to drop the column `cells` on the `Battle` table. All the data in the column will be lost.
+  - You are about to delete the column `cells` on the `Battle` table. All the data in the column will be lost.
 
 */
 -- AlterTable

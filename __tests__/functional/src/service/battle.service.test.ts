@@ -1,4 +1,4 @@
-// import { upsertBattle } from "../../../../src/orchestration/battle.service";
+// import { upsertBattle } from "../../../../src/orchestration/engine.service";
 // import pgBossManager from "@shared/pg-boss-manager";
 // import { Status } from "@prisma/client";
 // import prisma from "../../../../src/utils/prisma";
@@ -10,7 +10,7 @@
 //
 //
 // beforeEach(async () => {
-//   await prisma.battle.deleteMany();
+//   await prisma.engine.deleteMany();
 //   // при необходимости чистим и другие таблицы
 // });
 //
@@ -36,20 +36,20 @@
 //
 //     expect(battle1).toEqual(existingBattle);
 //
-//     const battle = await upsertBattle(userId2);
+//     const engine = await upsertBattle(userId2);
 //
-//     expect(battle.id).toEqual(battle1.id);
-//     expect(battle.playerIdsCount).toEqual(2);
-//     expect(battle.playerIds).toContain(userId1);
-//     expect(battle.playerIds).toContain(userId2);
+//     expect(engine.id).toEqual(battle1.id);
+//     expect(engine.playerIdsCount).toEqual(2);
+//     expect(engine.playerIds).toContain(userId1);
+//     expect(engine.playerIds).toContain(userId2);
 //   });
 //
 //   test("создание нового баттла для userId1", async () => {
-//     const battle = await upsertBattle(userId1);
+//     const engine = await upsertBattle(userId1);
 //
-//     expect(battle.playerIds).toContain(userId1);
-//     expect(battle.playerIdsCount).toBe(1);
-//     expect(battle.status).toBe(Status.Active);
+//     expect(engine.playerIds).toContain(userId1);
+//     expect(engine.playerIdsCount).toBe(1);
+//     expect(engine.status).toBe(Status.Active);
 //   });
 //
 //   test("возврат существующего баттла для userId1", async () => {
@@ -62,17 +62,17 @@
 //
 //   test("присоединение второго игрока userId2 к баттлу userId1", async () => {
 //     await upsertBattle(userId1);
-//     const battle = await upsertBattle(userId2);
+//     const engine = await upsertBattle(userId2);
 //
-//     expect(battle.playerIds).toContain(userId1);
-//     expect(battle.playerIds).toContain(userId2);
-//     expect(battle.playerIdsCount).toBe(2);
+//     expect(engine.playerIds).toContain(userId1);
+//     expect(engine.playerIds).toContain(userId2);
+//     expect(engine.playerIdsCount).toBe(2);
 //   });
 //
 //   test("создание нового баттла для userId2, если чужих нет", async () => {
 //     const battle1 = await upsertBattle(userId1);
 //     // завершаем первый баттл вручную
-//     await prisma.battle.update({
+//     await prisma.engine.update({
 //       where: { id: battle1.id },
 //       data: { status: Status.Finished },
 //     });

@@ -7,7 +7,7 @@
 //
 // beforeEach(async () => {
 //     userId1 = crypto.randomUUID();
-//     await prisma.battle.deleteMany();
+//     await prisma.engine.deleteMany();
 // });
 //
 // afterAll(async () => {
@@ -16,7 +16,7 @@
 //
 // test("успешно обновляет баттл", async () => {
 //     // создаём баттл
-//     const battle = await prisma.battle.create({
+//     const engine = await prisma.engine.create({
 //         data: {
 //             players: [userId1],
 //             playersCount: 1,
@@ -26,15 +26,15 @@
 //
 //     // сообщение для обновления
 //     const message = {
-//         id: battle.id,
+//         id: engine.id,
 //         cells: [BattleCellValue.CELL_X, BattleCellValue.CELL_O],
 //         status: Status.Finished,
 //         winner: userId1,
 //     };
 //
-//     await battleUpdated("battle.updated", 0, message);
+//     await battleUpdated("engine.updated", 0, message);
 //
-//     const updated = await prisma.battle.findUnique({where: {id: battle.id}});
+//     const updated = await prisma.engine.findUnique({where: {id: engine.id}});
 //
 //     expect(updated?.status).toBe(Status.Finished);
 //     expect(updated?.winner).toBe(userId1);
@@ -52,10 +52,10 @@
 //     };
 //
 //     await expect(
-//         battleUpdated("battle.updated", 0, message)
+//         battleUpdated("engine.updated", 0, message)
 //     ).resolves.not.toThrow();
 //
 //     // проверяем, что в базе ничего не появилось
-//     const battles = await prisma.battle.findMany();
+//     const battles = await prisma.engine.findMany();
 //     expect(battles.length).toBe(0);
 // });

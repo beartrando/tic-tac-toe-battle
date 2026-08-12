@@ -18,11 +18,11 @@ export class StartUseCase {
             try {
                 battle = await this.battleRepository.join(profileId, battleId);
             } catch (e) {
-                throw new NotFoundError('battle ' + battleId.value);
+                throw new NotFoundError('engine ' + battleId.value);
             }
 
             if (!battle) {
-                throw new NotFoundError('battle ' + battleId.value);
+                throw new NotFoundError('engine ' + battleId.value);
             }
 
             return battle;

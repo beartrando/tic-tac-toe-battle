@@ -31,13 +31,13 @@ FROM base AS deps
 RUN pnpm fetch
 RUN pnpm install --offline --frozen-lockfile
 
-RUN mkdir -p ./services/battle/src/contracts/proto
-RUN pnpm --filter battle proto:generate
+RUN mkdir -p ./services/engine/src/contracts/proto
+RUN pnpm --filter engine proto:generate
 
 RUN mkdir -p ./shared/errors/src/contracts/proto
 RUN pnpm --filter @shared/errors proto:generate
 
-RUN pnpm --filter battle prisma:generate
+RUN pnpm --filter engine prisma:generate
 
 # ---------- DEV ----------
 FROM deps AS dev
@@ -68,9 +68,9 @@ RUN pnpm --filter @shared/errors build
 RUN pnpm --filter @shared/kafka-manager build
 RUN pnpm --filter @shared/pg-boss-manager build
 
-RUN pnpm --filter battle build
+RUN pnpm --filter engine build
 
-RUN pnpm --filter battle deploy /deploy --prod
+RUN pnpm --filter engine deploy /deploy --prod
 
 # ---------- PROD ----------
 FROM node:22 AS prod
