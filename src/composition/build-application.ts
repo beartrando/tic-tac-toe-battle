@@ -20,6 +20,8 @@ import UpdateUseCase from "../application/use-cases/battle/update";
 import messageConfig from "../infrastructure/message/configs/message.config";
 import messageProducersConfig from "../infrastructure/message/configs/producers.config";
 import messageConsumersConfig from "../infrastructure/message/configs/consumers.config";
+import AuthService from "../infrastructure/auth/service";
+import authConfig from "../infrastructure/auth/config";
 
 
 function buildApplication() {
@@ -28,7 +30,7 @@ function buildApplication() {
 
     const dbService = new DbService();
 
-    // const authService = new AuthService(authConfig);
+    const authService = new AuthService(authConfig);
 
     const battleRepository = new PrismaBattleRepository(dbService.client);
 
