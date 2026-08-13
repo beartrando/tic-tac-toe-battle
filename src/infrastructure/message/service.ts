@@ -11,7 +11,6 @@ export class MessageService {
 
     constructor(
         private readonly config: KafkaConfig,
-        private readonly consumersConfig: Record<string, string>,
     ) {
     }
 

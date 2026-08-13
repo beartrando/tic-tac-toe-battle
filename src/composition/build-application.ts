@@ -9,10 +9,6 @@ import Application from "../application/application";
 import MessageService from "../infrastructure/message/service";
 import JobService from "../infrastructure/job/service";
 import DbService from "../infrastructure/db/service";
-import {messageConfig,
-    messageConsumersConfig,
-    messageProducersConfig
-} from "../infrastructure/message/config";
 import jobConfig from "../infrastructure/job/config";
 import PrismaBattleRepository from "../infrastructure/db/repositories/prisma-battle.repository";
 import GetUseCase from "../application/use-cases/battle/get";
@@ -21,8 +17,9 @@ import StartUseCase from "../application/use-cases/battle/start";
 import BattleHandler from "../infrastructure/grpc/handlers/battle.handler";
 import BattleUpdatedConsumer from "../infrastructure/message/consumers/battle-updated";
 import UpdateUseCase from "../application/use-cases/battle/update";
-// import {appConfig as authConfig} from "../infrastructure/auth/appConfig";
-// import AuthService from "../infrastructure/auth/service";
+import messageConfig from "../infrastructure/message/configs/message.config";
+import messageProducersConfig from "../infrastructure/message/configs/producers.config";
+import messageConsumersConfig from "../infrastructure/message/configs/consumers.config";
 
 
 function buildApplication() {
@@ -37,7 +34,7 @@ function buildApplication() {
 
     const updateUseCase = new UpdateUseCase(battleRepository);
     const battleUpdatedConsumer = new BattleUpdatedConsumer(updateUseCase);
-    const messageService = new MessageService(messageConfig, messageConsumersConfig);
+    const messageService = new MessageService(messageConfig);
     messageService.addConsumer(
         messageConsumersConfig.battleUpdated,
         battleUpdatedConsumer.execute
