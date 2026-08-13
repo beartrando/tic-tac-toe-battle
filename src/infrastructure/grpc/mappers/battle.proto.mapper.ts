@@ -18,7 +18,7 @@ export class BattleProtoMapper {
         });
     }
 
-    // static toDomain(user: authProto.UserObject): BattleEntity {
+    // static toDomain(user: authProto.UserObject): DeviceEntity {
     //
     // }
 }

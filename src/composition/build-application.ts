@@ -37,7 +37,11 @@ function buildApplication() {
 
     const updateUseCase = new UpdateUseCase(battleRepository);
     const battleUpdatedConsumer = new BattleUpdatedConsumer(updateUseCase);
-    const messageService = new MessageService(messageConfig, messageConsumersConfig, battleUpdatedConsumer);
+    const messageService = new MessageService(messageConfig, messageConsumersConfig);
+    messageService.addConsumer(
+        messageConsumersConfig.battleUpdated,
+        battleUpdatedConsumer.execute
+    )
 
     const getUseCase = new GetUseCase(battleRepository);
     const getActiveByProfileUseCase = new GetActiveByProfileUseCase(battleRepository);
