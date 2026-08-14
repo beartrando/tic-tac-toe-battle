@@ -39,7 +39,7 @@ function buildApplication() {
     const messageService = new MessageService(messageConfig);
     messageService.addConsumer(
         messageConsumersConfig.battleUpdated,
-        battleUpdatedConsumer.execute
+        battleUpdatedConsumer.execute.bind(battleUpdatedConsumer)
     )
 
     const getUseCase = new GetUseCase(battleRepository);
