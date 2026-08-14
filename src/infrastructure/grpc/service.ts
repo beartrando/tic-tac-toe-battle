@@ -49,18 +49,18 @@ export class GrpcService {
 
     private registerBattleService() {
         this.server.addService(battleProto.BattleService, {
-            get: this.battleHandler.get,
-            getActiveByProfile: this.battleHandler.getActiveByProfile,
-            start: this.battleHandler.start,
+            get: this.battleHandler.get.bind(this.battleHandler),
+            getActiveByProfile: this.battleHandler.getActiveByProfile.bind(this.battleHandler),
+            start: this.battleHandler.start.bind(this.battleHandler),
         });
     }
 
     private registerHealthService() {
         this.server.addService(healthProto.HealthService, {
-            check: this.healthHandler.check,
-            status: this.healthHandler.status,
-            livez: this.healthHandler.livez,
-            readyz: this.healthHandler.readyz,
+            check: this.healthHandler.check.bind(this.healthHandler),
+            status: this.healthHandler.status.bind(this.healthHandler),
+            livez: this.healthHandler.livez.bind(this.healthHandler),
+            readyz: this.healthHandler.readyz.bind(this.healthHandler),
         });
     }
 
