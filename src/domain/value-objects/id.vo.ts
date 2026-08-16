@@ -5,7 +5,11 @@ export class Id {
         readonly value: string,
     ) {
         if (!value) {
-            throw new Error("ProfileId cannot be empty");
+            throw new Error("Id cannot be empty");
+        }
+
+        if (/\s/.test(value)) {
+            throw new Error("Id cannot contain whitespace");
         }
     }
 
