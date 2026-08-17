@@ -5,7 +5,7 @@ import logger from "@shared/logger";
 import GetUseCase from "../../../application/use-cases/battle/get";
 import callbackError from "./callback.error";
 import BattleProtoMapper from "../mappers/battle.proto.mapper";
-import Id from "../../../domain/value-objects/id.vo";
+import Id from "../../../domain/common/value-objects/id.vo";
 import {NotFoundError} from "@shared/errors";
 import StartUseCase from "../../../application/use-cases/battle/start";
 import GetActiveByProfileUseCase from "../../../application/use-cases/battle/get-active-by-profile";

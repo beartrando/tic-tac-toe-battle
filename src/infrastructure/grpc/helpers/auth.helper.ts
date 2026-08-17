@@ -1,6 +1,6 @@
 import * as grpc from '@grpc/grpc-js';
 import {InvalidAuthorizationError} from "@shared/errors";
-import AccessToken from "../../../domain/value-objects/access-token.vo";
+import AccessToken from "../../../domain/common/value-objects/access-token.vo";
 
 export class AuthHelper {
     static getAccessToken(

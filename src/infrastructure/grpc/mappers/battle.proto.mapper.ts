@@ -1,5 +1,5 @@
 import * as battleProto from "../../../contracts/proto/battle";
-import BattleEntity from "../../../domain/entities/battle.entity";
+import BattleEntity from "../../../domain/battle/battle.entity";
 import BoardProtoMapper from "./battle/board.proto.mapper";
 import StatusProtoMapper from "./battle/status.proto.mapper";
 

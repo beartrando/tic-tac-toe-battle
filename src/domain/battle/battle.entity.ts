@@ -1,11 +1,12 @@
-import Id from "../value-objects/id.vo";
-import Board from "../value-objects/battle/board.vo";
-import PlayerIds from "../value-objects/battle/player-ids.vo";
-import BattleStatus from "../value-objects/battle/status.vo";
-import BattleStatusEnum from "../enums/battle/status.enum";
+import Id from "../common/value-objects/id.vo";
+import Board from "../battle/value-objects/board.vo";
+import PlayerIds from "../battle/value-objects/player-ids.vo";
+import BattleStatus from "../battle/value-objects/status.vo";
+import BattleStatusEnum from "../battle/enums/status.enum";
+import BattleId from "./value-objects/battle-id.vo";
 
 type BattleEntityProps = {
-    id?: Id;
+    id?: BattleId;
     playerIds: PlayerIds;
     board?: Board;
     status?: BattleStatus;
@@ -17,7 +18,7 @@ type BattleEntityProps = {
 
 export class BattleEntity {
     constructor(
-        readonly id: Id,
+        readonly id: BattleId,
         readonly playerIds: PlayerIds,
         readonly board: Board,
         readonly status: BattleStatus,
@@ -32,7 +33,7 @@ export class BattleEntity {
         const now = new Date();
 
         return new BattleEntity(
-            props.id ?? Id.create(),
+            props.id ?? BattleId.create(),
             props.playerIds,
             props.board ?? Board.empty(),
             props.status ?? new BattleStatus(BattleStatusEnum.New),

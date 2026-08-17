@@ -1,5 +1,5 @@
 import * as battleProto from "../../../../contracts/proto/battle";
-import Board from "../../../../domain/value-objects/battle/board.vo";
+import Board from "../../../../domain/battle/value-objects/board.vo";
 import CellValueProtoMapper from "./cell-value.proto.mapper";
 
 export class BoardProtoMapper {

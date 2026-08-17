@@ -1,5 +1,5 @@
-import BattleRepository from "../../../domain/repositories/battle.repository";
-import BattleEntity from "../../../domain/entities/battle.entity";
+import BattleRepository from "../../../domain/battle/battle.repository";
+import BattleEntity from "../../../domain/battle/battle.entity";
 
 export class UpdateUseCase {
     constructor(

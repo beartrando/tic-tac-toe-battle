@@ -1,10 +1,11 @@
 import {BattleStatus, PrismaClient} from "@prisma/client";
 
-import BattleRepository from "../../../domain/repositories/battle.repository";
-import BattleEntity from "../../../domain/entities/battle.entity";
+import BattleRepository from "../../../domain/battle/battle.repository";
+import BattleEntity from "../../../domain/battle/battle.entity";
 
-import Id from "../../../domain/value-objects/id.vo";
+import Id from "../../../domain/common/value-objects/id.vo";
 import BattleDbMapper from "../mappers/battle.mapper";
+import BattleId from "../../../domain/battle/value-objects/battle-id.vo";
 
 export class PrismaBattleRepository implements BattleRepository {
 
@@ -14,7 +15,7 @@ export class PrismaBattleRepository implements BattleRepository {
     }
 
     async findById(
-        id: Id,
+        id: BattleId,
     ): Promise<BattleEntity | null> {
 
         const battle = await this.prisma.battle.findUnique({
@@ -73,7 +74,7 @@ export class PrismaBattleRepository implements BattleRepository {
     }
 
 
-    async join(profileId: Id, battleId: Id): Promise<BattleEntity | null> {
+    async join(profileId: Id, battleId: BattleId): Promise<BattleEntity | null> {
 
         const updated = await this.prisma.battle.updateMany({
             where: {

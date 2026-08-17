@@ -1,5 +1,5 @@
 import BattleEntity from "../entities/battle.entity";
-import Id from "../value-objects/id.vo";
+import Id from "../common/value-objects/id.vo";
 
 export interface BattleRepository {
 

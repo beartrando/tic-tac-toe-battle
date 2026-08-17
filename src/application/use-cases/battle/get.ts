@@ -1,6 +1,6 @@
-import BattleRepository from "../../../domain/repositories/battle.repository";
-import BattleEntity from "../../../domain/entities/battle.entity";
-import Id from "../../../domain/value-objects/id.vo";
+import BattleRepository from "../../../domain/battle/battle.repository";
+import BattleEntity from "../../../domain/battle/battle.entity";
+import Id from "../../../domain/common/value-objects/id.vo";
 
 export class GetUseCase {
     constructor(

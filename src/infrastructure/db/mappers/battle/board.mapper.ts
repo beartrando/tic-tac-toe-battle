@@ -1,6 +1,6 @@
 import {BattleCellValue} from "@prisma/client";
 import BattleCellValueMapper from "./cell-value.mapper";
-import Board from "../../../../domain/value-objects/battle/board.vo";
+import Board from "../../../../domain/battle/value-objects/board.vo";
 
 export class BattleBoardMapper {
 

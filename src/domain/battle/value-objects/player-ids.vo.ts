@@ -1,4 +1,4 @@
-import Id from "../id.vo";
+import Id from "../../common/value-objects/id.vo";
 
 export class PlayerIds {
     constructor(
