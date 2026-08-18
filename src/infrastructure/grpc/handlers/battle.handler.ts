@@ -71,9 +71,13 @@ export class BattleHandler {
         try {
             const {profileId, battleId} = call.request;
 
-            const battle = await this.startUseCase.execute(new Id(profileId), new Id(battleId));
+            // logger.log(profileId);
+            // logger.log(battleId);
+            const battle = await this.startUseCase.execute(new Id(profileId), battleId ? new Id(battleId) : null);
 
             const result = battleProto.BattleResponse.create({battle: BattleProtoMapper.toProto(battle)});
+
+            // logger.log(result);
 
             if (!result) {
                 throw new NotFoundError('Battle');

@@ -3,6 +3,7 @@ import BattleEntity from "../../../domain/battle/battle.entity";
 import Id from "../../../domain/common/value-objects/id.vo";
 import JobService from "../../../infrastructure/job/service";
 import {NotFoundError} from "@shared/errors";
+import logger from "@shared/logger";
 
 export class StartUseCase {
     constructor(
@@ -37,7 +38,7 @@ export class StartUseCase {
         }
 
         for (let attempts = 0; attempts < 3; attempts++) {
-            const existingSomebodiesBattle = await this.battleRepository.findAvailableBattle(profileId);
+            const existingSomebodiesBattle = await this.battleRepository.findAvailableForProfile(profileId);
 
             if (!existingSomebodiesBattle) {
                 break;
@@ -54,6 +55,7 @@ export class StartUseCase {
         }
 
         const newBattle = BattleEntity.createNew(profileId);
+        // logger.log(newBattle);
         return await this.battleRepository.save(newBattle);
     }
 }

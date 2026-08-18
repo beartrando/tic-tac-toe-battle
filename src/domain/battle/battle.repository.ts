@@ -11,7 +11,7 @@ export interface BattleRepository {
 
     join(profileId: Id, battleId: Id): Promise<BattleEntity | null>;
 
-    findAvailableBattle(profileId: Id): Promise<BattleEntity | null>;
+    findAvailableForProfile(profileId: Id): Promise<BattleEntity | null>;
 }
 
 export default BattleRepository;

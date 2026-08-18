@@ -6,6 +6,7 @@ import BattleEntity from "../../../domain/battle/battle.entity";
 import Id from "../../../domain/common/value-objects/id.vo";
 import BattleDbMapper from "../mappers/battle.mapper";
 import BattleId from "../../../domain/battle/value-objects/battle-id.vo";
+import logger from "@shared/logger";
 
 export class PrismaBattleRepository implements BattleRepository {
 
@@ -41,6 +42,7 @@ export class PrismaBattleRepository implements BattleRepository {
             ...update
         } = battleDb;
 
+        // logger.log(battleDb);
         const result = await this.prisma.battle.upsert({
             where: {
                 id: battleDb.id,
@@ -106,7 +108,7 @@ export class PrismaBattleRepository implements BattleRepository {
         return BattleDbMapper.toDomain(battle);
     }
 
-    async findAvailableBattle(profileId: Id): Promise<BattleEntity | null> {
+    async findAvailableForProfile(profileId: Id): Promise<BattleEntity | null> {
 
         const battle = await this.prisma.battle.findFirst({
             where: {
