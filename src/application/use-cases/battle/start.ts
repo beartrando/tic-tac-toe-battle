@@ -3,7 +3,8 @@ import BattleEntity from "../../../domain/battle/battle.entity";
 import Id from "../../../domain/common/value-objects/id.vo";
 import JobService from "../../../infrastructure/job/service";
 import {NotFoundError} from "@shared/errors";
-import logger from "@shared/logger";
+import BattleProtoMapper from "../../../infrastructure/grpc/mappers/battle.proto.mapper";
+import StatusEnum from "../../../domain/battle/enums/status.enum";
 
 export class StartUseCase {
     constructor(
@@ -26,6 +27,8 @@ export class StartUseCase {
                 throw new NotFoundError('engine ' + battleId.value);
             }
 
+            this.enqueue(battle);
+
             return battle;
         }
 
@@ -34,6 +37,7 @@ export class StartUseCase {
         const existingMyBattle = existingMyBattles?.values().next().value;
 
         if (existingMyBattle) {
+            this.enqueue(existingMyBattle);
             return existingMyBattle;
         }
 
@@ -47,6 +51,7 @@ export class StartUseCase {
             try {
                 const battle = await this.battleRepository.join(profileId, existingSomebodiesBattle.id);
                 if (battle) {
+                    this.enqueue(battle);
                     return battle;
                 }
             } catch (e) {
@@ -55,8 +60,16 @@ export class StartUseCase {
         }
 
         const newBattle = BattleEntity.createNew(profileId);
-        // logger.log(newBattle);
-        return await this.battleRepository.save(newBattle);
+        const battle = await this.battleRepository.save(newBattle);
+
+        // logger.log(battle);
+        return battle;
+    }
+
+    private enqueue(battle: BattleEntity): void {
+        if (battle.status.value == StatusEnum.Active) {
+            this.jobService.enqueue(this.battleStartedTopik, BattleProtoMapper.toProto(battle));
+        }
     }
 }
 
