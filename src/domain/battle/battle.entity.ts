@@ -1,4 +1,3 @@
-import Id from "../common/value-objects/id.vo";
 import Board from "../battle/value-objects/board.vo";
 import PlayerIds from "../battle/value-objects/player-ids.vo";
 import BattleStatus from "../battle/value-objects/status.vo";

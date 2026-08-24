@@ -1,7 +1,6 @@
 import {Battle} from "@prisma/client";
 
 import BattleEntity from "../../../domain/battle/battle.entity";
-import Id from "../../../domain/common/value-objects/id.vo";
 import PlayerIds from "../../../domain/battle/value-objects/player-ids.vo";
 import BattleStatusMapper from "./battle/status.mapper";
 import BattleBoardMapper from "./battle/board.mapper";

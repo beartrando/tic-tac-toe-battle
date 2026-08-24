@@ -2,7 +2,7 @@ import {BattleObject} from "../../../contracts/proto/battle";
 import UpdateUseCase from "../../../application/use-cases/battle/update";
 import UseCaseInterface from "../interfaces/use-case.interface";
 
-export class BattleUpdatedConsumer implements UseCaseInterface<BattleObject>{
+export class BattleUpdatedConsumer implements UseCaseInterface<BattleObject> {
     constructor(
         private readonly updateUseCase: UpdateUseCase,
     ) {

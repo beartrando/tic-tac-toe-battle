@@ -2,11 +2,8 @@ import {BattleStatus, PrismaClient} from "@prisma/client";
 
 import BattleRepository from "../../../domain/battle/battle.repository";
 import BattleEntity from "../../../domain/battle/battle.entity";
-
-import Id from "../../../domain/common/value-objects/id.vo";
 import BattleDbMapper from "../mappers/battle.mapper";
 import BattleId from "../../../domain/battle/value-objects/battle-id.vo";
-import logger from "@shared/logger";
 import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
 
 export class PrismaBattleRepository implements BattleRepository {
