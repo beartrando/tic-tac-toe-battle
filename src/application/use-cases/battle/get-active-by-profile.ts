@@ -1,6 +1,6 @@
 import BattleRepository from "../../../domain/battle/battle.repository";
 import BattleEntity from "../../../domain/battle/battle.entity";
-import Id from "../../../domain/common/value-objects/id.vo";
+import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
 
 export class GetActiveByProfileUseCase {
     constructor(
@@ -8,7 +8,7 @@ export class GetActiveByProfileUseCase {
     ) {
     }
 
-    async execute(profileId: Id): Promise<Set<BattleEntity>> {
+    async execute(profileId: ProfileId): Promise<Set<BattleEntity>> {
         const battles = await this.battleRepository.findActiveByProfileId(profileId);
 
         if (!battles) {

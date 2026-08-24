@@ -5,10 +5,11 @@ import logger from "@shared/logger";
 import GetUseCase from "../../../application/use-cases/battle/get";
 import callbackError from "./callback.error";
 import BattleProtoMapper from "../mappers/battle.proto.mapper";
-import Id from "../../../domain/common/value-objects/id.vo";
 import {NotFoundError} from "@shared/errors";
 import StartUseCase from "../../../application/use-cases/battle/start";
 import GetActiveByProfileUseCase from "../../../application/use-cases/battle/get-active-by-profile";
+import BattleId from "../../../domain/battle/value-objects/battle-id.vo";
+import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
 
 
 export class BattleHandler {
@@ -27,7 +28,7 @@ export class BattleHandler {
             const {battleId} = call.request;
             // logger.log('getBattleById ' + battleId);
 
-            const battle = await this.getUseCase.execute(new Id(battleId));
+            const battle = await this.getUseCase.execute(new BattleId(battleId));
 
             const result = battleProto.BattleResponse.create({battle: BattleProtoMapper.toProto(battle)});
 
@@ -51,7 +52,7 @@ export class BattleHandler {
         try {
             const {profileId} = call.request;
 
-            const battle = await this.getActiveByProfileUseCase.execute(new Id(profileId));
+            const battle = await this.getActiveByProfileUseCase.execute(new ProfileId(profileId));
 
             const result = battleProto.BattlesResponse.create({battles: {items: [...battle].map(BattleProtoMapper.toProto)}});
 
@@ -73,7 +74,7 @@ export class BattleHandler {
 
             // logger.log(profileId);
             // logger.log(battleId);
-            const battle = await this.startUseCase.execute(new Id(profileId), battleId ? new Id(battleId) : null);
+            const battle = await this.startUseCase.execute(new ProfileId(profileId), battleId ? new BattleId(battleId) : null);
 
             const result = battleProto.BattleResponse.create({battle: BattleProtoMapper.toProto(battle)});
 

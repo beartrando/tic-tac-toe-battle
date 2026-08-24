@@ -4,13 +4,14 @@ import PlayerIds from "../battle/value-objects/player-ids.vo";
 import BattleStatus from "../battle/value-objects/status.vo";
 import BattleStatusEnum from "../battle/enums/status.enum";
 import BattleId from "./value-objects/battle-id.vo";
+import ProfileId from "../profile/value-objects/profile-id.vo";
 
 type BattleEntityProps = {
     id?: BattleId;
     playerIds: PlayerIds;
     board?: Board;
     status?: BattleStatus;
-    winnerId?: Id | null;
+    winnerId?: ProfileId | null;
     lastMoveAt?: Date | null;
     createdAt?: Date;
     updatedAt?: Date;
@@ -22,7 +23,7 @@ export class BattleEntity {
         readonly playerIds: PlayerIds,
         readonly board: Board,
         readonly status: BattleStatus,
-        readonly winnerId: Id | null,
+        readonly winnerId: ProfileId | null,
         readonly lastMoveAt: Date | null,
         readonly createdAt: Date,
         readonly updatedAt: Date,
@@ -44,7 +45,7 @@ export class BattleEntity {
         );
     }
 
-    static createNew(profileId: Id): BattleEntity {
+    static createNew(profileId: ProfileId): BattleEntity {
         return BattleEntity.create({playerIds: new PlayerIds([profileId])});
     }
 

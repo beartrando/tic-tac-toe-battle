@@ -5,7 +5,7 @@ export class BattleBoard {
         readonly cells: readonly CellValueEnum[],
     ) {
         if (cells.length !== 9) {
-            throw new Error("Board must contain 9 cells");
+            throw new Error("BattleBoard must contain 9 cells");
         }
 
         if (

@@ -1,17 +1,18 @@
 import BattleEntity from "../battle/battle.entity";
-import Id from "../common/value-objects/id.vo";
+import BattleId from "./value-objects/battle-id.vo";
+import ProfileId from "../profile/value-objects/profile-id.vo";
 
 export interface BattleRepository {
 
-    findById(id: Id): Promise<BattleEntity | null>;
+    findById(id: BattleId): Promise<BattleEntity | null>;
 
     save(user: BattleEntity): Promise<BattleEntity>;
 
-    findActiveByProfileId(profileId: Id): Promise<Set<BattleEntity> | null>;
+    findActiveByProfileId(profileId: ProfileId): Promise<Set<BattleEntity> | null>;
 
-    join(profileId: Id, battleId: Id): Promise<BattleEntity | null>;
+    join(profileId: ProfileId, battleId: BattleId): Promise<BattleEntity | null>;
 
-    findAvailableForProfile(profileId: Id): Promise<BattleEntity | null>;
+    findAvailableForProfile(profileId: ProfileId): Promise<BattleEntity | null>;
 }
 
 export default BattleRepository;

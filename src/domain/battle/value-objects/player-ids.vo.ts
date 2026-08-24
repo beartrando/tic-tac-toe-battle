@@ -1,8 +1,8 @@
-import Id from "../../common/value-objects/id.vo";
+import UserId from "../../user/value-objects/user-id.vo";
 
 export class PlayerIds {
     constructor(
-        readonly value: readonly Id[],
+        readonly value: readonly UserId[],
     ) {
         if (value.length < 1 || value.length > 2) {
             throw new Error(

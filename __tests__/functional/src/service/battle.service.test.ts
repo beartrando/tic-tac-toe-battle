@@ -1,6 +1,6 @@
 // import { upsertBattle } from "../../../../src/orchestration/engine.service";
 // import pgBossManager from "@shared/pg-boss-manager";
-// import { Status } from "@prisma/client";
+// import { BattleStatus } from "@prisma/client";
 // import prisma from "../../../../src/utils/prisma";
 // import logger from "@shared/logger/dist";
 //
@@ -49,7 +49,7 @@
 //
 //     expect(engine.playerIds).toContain(userId1);
 //     expect(engine.playerIdsCount).toBe(1);
-//     expect(engine.status).toBe(Status.Active);
+//     expect(engine.status).toBe(BattleStatus.Active);
 //   });
 //
 //   test("возврат существующего баттла для userId1", async () => {
@@ -74,7 +74,7 @@
 //     // завершаем первый баттл вручную
 //     await prisma.engine.update({
 //       where: { id: battle1.id },
-//       data: { status: Status.Finished },
+//       data: { status: BattleStatus.Finished },
 //     });
 //
 //     const battle2 = await upsertBattle(userId2);

@@ -1,10 +1,11 @@
 import BattleRepository from "../../../domain/battle/battle.repository";
 import BattleEntity from "../../../domain/battle/battle.entity";
-import Id from "../../../domain/common/value-objects/id.vo";
 import JobService from "../../../infrastructure/job/service";
 import {NotFoundError} from "@shared/errors";
 import BattleProtoMapper from "../../../infrastructure/grpc/mappers/battle.proto.mapper";
 import StatusEnum from "../../../domain/battle/enums/status.enum";
+import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
+import BattleId from "../../../domain/battle/value-objects/battle-id.vo";
 
 export class StartUseCase {
     constructor(
@@ -14,7 +15,7 @@ export class StartUseCase {
     ) {
     }
 
-    async execute(profileId: Id, battleId?: Id | null): Promise<BattleEntity> {
+    async execute(profileId: ProfileId, battleId?: BattleId | null): Promise<BattleEntity> {
         if (battleId) {
             let battle: BattleEntity | null;
             try {

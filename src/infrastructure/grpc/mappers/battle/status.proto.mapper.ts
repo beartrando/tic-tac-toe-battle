@@ -21,11 +21,11 @@ export class StatusProtoMapper {
 
     // static toDomain(
     //     status: PrismaBattleStatus,
-    // ): Status {
+    // ): BattleStatus {
     //     switch (status) {
-    //         case PrismaBattleStatus.New: return new Status(StatusEnum.New);
-    //         case PrismaBattleStatus.Active: return new Status(StatusEnum.Active);
-    //         case PrismaBattleStatus.Finished: return new Status(StatusEnum.Finished);
+    //         case PrismaBattleStatus.New: return new BattleStatus(BattleStatusEnum.New);
+    //         case PrismaBattleStatus.Active: return new BattleStatus(BattleStatusEnum.Active);
+    //         case PrismaBattleStatus.Finished: return new BattleStatus(BattleStatusEnum.Finished);
     //         default: throw new Error(`Unknown PrismaBattleStatus: ${status}`);
     //     }
     // }

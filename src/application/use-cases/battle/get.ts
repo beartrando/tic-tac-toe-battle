@@ -1,6 +1,6 @@
 import BattleRepository from "../../../domain/battle/battle.repository";
 import BattleEntity from "../../../domain/battle/battle.entity";
-import Id from "../../../domain/common/value-objects/id.vo";
+import BattleId from "../../../domain/battle/value-objects/battle-id.vo";
 
 export class GetUseCase {
     constructor(
@@ -8,7 +8,7 @@ export class GetUseCase {
     ) {
     }
 
-    async execute(id: Id): Promise<BattleEntity> {
+    async execute(id: BattleId): Promise<BattleEntity> {
         const battle = await this.battleRepository.findById(id);
 
         if (!battle) {
