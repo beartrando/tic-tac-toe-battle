@@ -33,7 +33,7 @@ export class StartUseCase {
             return battle;
         }
 
-        const existingMyBattles = await this.battleRepository.findActiveByProfileId(profileId);
+        const existingMyBattles = await this.battleRepository.findUnfinishedByProfileId(profileId);
 
         const existingMyBattle = existingMyBattles?.values().next().value;
 

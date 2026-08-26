@@ -9,7 +9,7 @@ export class GetActiveByProfileUseCase {
     }
 
     async execute(profileId: ProfileId): Promise<Set<BattleEntity>> {
-        const battles = await this.battleRepository.findActiveByProfileId(profileId);
+        const battles = await this.battleRepository.findUnfinishedByProfileId(profileId);
 
         if (!battles) {
             throw new Error("Battles don't not exist");

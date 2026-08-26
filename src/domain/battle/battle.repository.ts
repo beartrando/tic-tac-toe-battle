@@ -8,7 +8,7 @@ export interface BattleRepository {
 
     save(user: BattleEntity): Promise<BattleEntity>;
 
-    findActiveByProfileId(profileId: ProfileId): Promise<Set<BattleEntity> | null>;
+    findUnfinishedByProfileId(profileId: ProfileId): Promise<Set<BattleEntity> | null>;
 
     join(profileId: ProfileId, battleId: BattleId): Promise<BattleEntity | null>;
 
