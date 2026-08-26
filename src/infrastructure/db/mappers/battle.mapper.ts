@@ -1,7 +1,7 @@
 import {Battle} from "@prisma/client";
 
 import BattleEntity from "../../../domain/battle/battle.entity";
-import PlayerIds from "../../../domain/battle/value-objects/player-ids.vo";
+import BattlePlayerIds from "../../../domain/battle/value-objects/battle-player-ids.vo";
 import BattleStatusMapper from "./battle/status.mapper";
 import BattleBoardMapper from "./battle/board.mapper";
 import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
@@ -28,7 +28,7 @@ export class BattleDbMapper {
     static toDomain(battle: Battle): BattleEntity {
         return BattleEntity.create({
             id: new BattleId(battle.id),
-            playerIds: new PlayerIds(battle.playerIds.map((id: string) => new ProfileId(id))),
+            playerIds: new BattlePlayerIds(battle.playerIds.map((id: string) => new ProfileId(id))),
             board: BattleBoardMapper.toDomain(battle.board),
             status: BattleStatusMapper.toDomain(battle.status),
             winnerId: battle.winnerId ? new ProfileId(battle.winnerId) : null,

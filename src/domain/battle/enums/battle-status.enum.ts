@@ -1,4 +1,4 @@
-export enum StatusEnum {
+export enum BattleStatusEnum {
     Unknown = "Unknown",
     New = "New",
     Ready = "Ready",
@@ -6,4 +6,4 @@ export enum StatusEnum {
     Finished = "Finished",
 }
 
-export default StatusEnum;
+export default BattleStatusEnum;

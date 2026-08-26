@@ -1,13 +1,13 @@
-import Board from "../battle/value-objects/board.vo";
-import PlayerIds from "../battle/value-objects/player-ids.vo";
-import BattleStatus from "../battle/value-objects/status.vo";
-import BattleStatusEnum from "../battle/enums/status.enum";
+import Board from "./value-objects/battle-board.vo";
+import BattlePlayerIds from "./value-objects/battle-player-ids.vo";
+import BattleStatus from "./value-objects/battle-status.vo";
+import BattleStatusEnum from "./enums/battle-status.enum";
 import BattleId from "./value-objects/battle-id.vo";
 import ProfileId from "../profile/value-objects/profile-id.vo";
 
 type BattleEntityProps = {
     id?: BattleId;
-    playerIds: PlayerIds;
+    playerIds: BattlePlayerIds;
     board?: Board;
     status?: BattleStatus;
     winnerId?: ProfileId | null;
@@ -19,7 +19,7 @@ type BattleEntityProps = {
 export class BattleEntity {
     constructor(
         readonly id: BattleId,
-        readonly playerIds: PlayerIds,
+        readonly playerIds: BattlePlayerIds,
         readonly board: Board,
         readonly status: BattleStatus,
         readonly winnerId: ProfileId | null,
@@ -45,7 +45,7 @@ export class BattleEntity {
     }
 
     static createNew(profileId: ProfileId): BattleEntity {
-        return BattleEntity.create({playerIds: new PlayerIds([profileId])});
+        return BattleEntity.create({playerIds: new BattlePlayerIds([profileId])});
     }
 
 }

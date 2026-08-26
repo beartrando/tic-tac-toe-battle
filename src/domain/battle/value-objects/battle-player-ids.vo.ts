@@ -1,6 +1,6 @@
 import UserId from "../../user/value-objects/user-id.vo";
 
-export class PlayerIds {
+export class BattlePlayerIds {
     constructor(
         readonly value: readonly UserId[],
     ) {
@@ -21,4 +21,4 @@ export class PlayerIds {
     }
 }
 
-export default PlayerIds;
+export default BattlePlayerIds;

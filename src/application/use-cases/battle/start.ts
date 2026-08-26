@@ -3,7 +3,7 @@ import BattleEntity from "../../../domain/battle/battle.entity";
 import JobService from "../../../infrastructure/job/service";
 import {NotFoundError} from "@shared/errors";
 import BattleProtoMapper from "../../../infrastructure/grpc/mappers/battle.proto.mapper";
-import StatusEnum from "../../../domain/battle/enums/status.enum";
+import BattleStatusEnum from "../../../domain/battle/enums/battle-status.enum";
 import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
 import BattleId from "../../../domain/battle/value-objects/battle-id.vo";
 
@@ -68,7 +68,7 @@ export class StartUseCase {
     }
 
     private enqueue(battle: BattleEntity): void {
-        if (battle.status.value == StatusEnum.Active) {
+        if (battle.status.value == BattleStatusEnum.Active) {
             this.jobService.enqueue(this.battleStartedTopik, BattleProtoMapper.toProto(battle));
         }
     }
