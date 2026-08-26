@@ -10,7 +10,7 @@ export class BattleUpdatedConsumer implements UseCaseInterface<BattleObject> {
 
     async execute(topic: string, partition: number, message: BattleObject): Promise<void> {
         // try {
-        //     // logger.log('battleUpdated');
+        //     // logger.log('battleStarted');
         //     // logger.log(message);
         //     await this.updateUseCase(message);
         //     await BattleModel.updateBattle(message as BattleObject);

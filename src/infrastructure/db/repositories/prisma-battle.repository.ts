@@ -61,6 +61,13 @@ export class PrismaBattleRepository implements BattleRepository {
                 playerIds: {
                     has: profileId.value,
                 },
+                status: {
+                    in: [
+                        BattleStatus.New,
+                        BattleStatus.Ready,
+                        BattleStatus.Active,
+                    ],
+                },
             },
         });
 
