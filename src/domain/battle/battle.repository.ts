@@ -12,7 +12,7 @@ export interface BattleRepository {
 
     join(profileId: ProfileId, battleId: BattleId): Promise<BattleEntity | null>;
 
-    findAvailableForProfile(profileId: ProfileId): Promise<BattleEntity | null>;
+    findNewForProfile(profileId: ProfileId): Promise<BattleEntity | null>;
 }
 
 export default BattleRepository;

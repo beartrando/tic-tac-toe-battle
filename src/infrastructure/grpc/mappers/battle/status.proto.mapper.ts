@@ -1,6 +1,6 @@
 import * as battleProto from "../../../../contracts/proto/battle";
-import BattleStatus from "../../../../domain/battle/value-objects/status.vo";
-import BattleStatusEnum from "../../../../domain/battle/enums/status.enum";
+import BattleStatus from "../../../../domain/battle/value-objects/battle-status.vo";
+import BattleStatusEnum from "../../../../domain/battle/enums/battle-status.enum";
 
 export class StatusProtoMapper {
 
@@ -10,6 +10,8 @@ export class StatusProtoMapper {
         switch (status.value) {
             case BattleStatusEnum.New:
                 return battleProto.BattleStatus.NEW;
+            case BattleStatusEnum.Ready:
+                return battleProto.BattleStatus.READY;
             case BattleStatusEnum.Active:
                 return battleProto.BattleStatus.ACTIVE;
             case BattleStatusEnum.Finished:
@@ -19,16 +21,22 @@ export class StatusProtoMapper {
         }
     }
 
-    // static toDomain(
-    //     status: PrismaBattleStatus,
-    // ): BattleStatus {
-    //     switch (status) {
-    //         case PrismaBattleStatus.New: return new BattleStatus(BattleStatusEnum.New);
-    //         case PrismaBattleStatus.Active: return new BattleStatus(BattleStatusEnum.Active);
-    //         case PrismaBattleStatus.Finished: return new BattleStatus(BattleStatusEnum.Finished);
-    //         default: throw new Error(`Unknown PrismaBattleStatus: ${status}`);
-    //     }
-    // }
+    static toDomain(
+        status: battleProto.BattleStatus,
+    ): BattleStatus {
+        switch (status) {
+            case battleProto.BattleStatus.NEW:
+                return new BattleStatus(BattleStatusEnum.New);
+            case battleProto.BattleStatus.READY:
+                return new BattleStatus(BattleStatusEnum.Ready);
+            case battleProto.BattleStatus.ACTIVE:
+                return new BattleStatus(BattleStatusEnum.Active);
+            case battleProto.BattleStatus.FINISHED:
+                return new BattleStatus(BattleStatusEnum.Finished);
+            default:
+                return new BattleStatus(BattleStatusEnum.Unknown);
+        }
+    }
 }
 
 export default StatusProtoMapper;

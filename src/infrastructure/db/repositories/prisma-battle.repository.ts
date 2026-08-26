@@ -92,7 +92,7 @@ export class PrismaBattleRepository implements BattleRepository {
                 playerIds: {
                     push: profileId.value,
                 },
-                status: BattleStatus.Active,
+                status: BattleStatus.Ready,
             },
         });
 
@@ -113,7 +113,7 @@ export class PrismaBattleRepository implements BattleRepository {
         return BattleDbMapper.toDomain(battle);
     }
 
-    async findAvailableForProfile(profileId: ProfileId): Promise<BattleEntity | null> {
+    async findNewForProfile(profileId: ProfileId): Promise<BattleEntity | null> {
 
         const battle = await this.prisma.battle.findFirst({
             where: {

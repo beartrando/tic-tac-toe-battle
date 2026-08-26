@@ -11,6 +11,8 @@ export class BattleStatusMapper {
         switch (status.value) {
             case BattleStatusEnum.New:
                 return PrismaBattleStatus.New;
+            case BattleStatusEnum.Ready:
+                return PrismaBattleStatus.Ready;
             case BattleStatusEnum.Active:
                 return PrismaBattleStatus.Active;
             case BattleStatusEnum.Finished:
@@ -26,6 +28,8 @@ export class BattleStatusMapper {
         switch (status) {
             case PrismaBattleStatus.New:
                 return new BattleStatus(BattleStatusEnum.New);
+            case PrismaBattleStatus.Ready:
+                return new BattleStatus(BattleStatusEnum.Ready);
             case PrismaBattleStatus.Active:
                 return new BattleStatus(BattleStatusEnum.Active);
             case PrismaBattleStatus.Finished:

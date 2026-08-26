@@ -43,7 +43,7 @@ export class StartUseCase {
         }
 
         for (let attempts = 0; attempts < 3; attempts++) {
-            const existingSomebodiesBattle = await this.battleRepository.findAvailableForProfile(profileId);
+            const existingSomebodiesBattle = await this.battleRepository.findNewForProfile(profileId);
 
             if (!existingSomebodiesBattle) {
                 break;
