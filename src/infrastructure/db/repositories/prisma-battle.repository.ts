@@ -52,7 +52,7 @@ export class PrismaBattleRepository implements BattleRepository {
         return BattleDbMapper.toDomain(result);
     }
 
-    async findActiveByProfileId(
+    async findUnfinishedByProfileId(
         profileId: ProfileId,
     ): Promise<Set<BattleEntity> | null> {
 
