@@ -36,7 +36,7 @@ export class Application {
         } catch (err) {
             logger.error(
                 {err},
-                '💥 Failed to start Battle',
+                '💥 Failed to start Battle service',
             );
             process.exit(1);
         }

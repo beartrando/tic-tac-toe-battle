@@ -68,7 +68,7 @@ export class StartUseCase {
     }
 
     private enqueue(battle: BattleEntity): void {
-        if (battle.status.value == BattleStatusEnum.Active) {
+        if (battle.status.value == BattleStatusEnum.Ready) {
             this.jobService.enqueue(this.battleStartedTopik, BattleProtoMapper.toProto(battle));
         }
     }
