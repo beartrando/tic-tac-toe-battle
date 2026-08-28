@@ -1,8 +1,8 @@
-import CellValueEnum from "../../battle/enums/cell-value.enum";
+import BattleCellValueEnum from "../enums/battle-cell-value.enum";
 
 export class BattleBoard {
     constructor(
-        readonly cells: readonly CellValueEnum[],
+        readonly cells: readonly BattleCellValueEnum[],
     ) {
         if (cells.length !== 9) {
             throw new Error("BattleBoard must contain 9 cells");
@@ -10,7 +10,7 @@ export class BattleBoard {
 
         if (
             cells.some(
-                cell => !Object.values(CellValueEnum).includes(cell),
+                cell => !Object.values(BattleCellValueEnum).includes(cell),
             )
         ) {
             throw new Error("Invalid cell value");
@@ -19,7 +19,7 @@ export class BattleBoard {
 
     static empty(): BattleBoard {
         return new BattleBoard(
-            Array(9).fill(CellValueEnum.EMPTY),
+            Array(9).fill(BattleCellValueEnum.EMPTY),
         );
     }
 }

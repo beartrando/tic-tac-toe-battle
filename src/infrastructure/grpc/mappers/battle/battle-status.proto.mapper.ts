@@ -2,7 +2,7 @@ import * as battleProto from "../../../../contracts/proto/battle";
 import BattleStatus from "../../../../domain/battle/value-objects/battle-status.vo";
 import BattleStatusEnum from "../../../../domain/battle/enums/battle-status.enum";
 
-export class StatusProtoMapper {
+export class BattleStatusProtoMapper {
 
     static toProto(
         status: BattleStatus,
@@ -39,4 +39,4 @@ export class StatusProtoMapper {
     }
 }
 
-export default StatusProtoMapper;
+export default BattleStatusProtoMapper;

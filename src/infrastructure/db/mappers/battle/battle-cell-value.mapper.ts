@@ -1,6 +1,6 @@
 import {BattleCellValue} from "@prisma/client";
 
-import BattleCellValueEnum from "../../../../domain/battle/enums/cell-value.enum";
+import BattleCellValueEnum from "../../../../domain/battle/enums/battle-cell-value.enum";
 
 export class BattleCellValueMapper {
 

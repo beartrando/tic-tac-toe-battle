@@ -6,6 +6,10 @@ export class BattleStatus {
     ) {
     }
 
+    static create(status: BattleStatusEnum) {
+        return new BattleStatus(status);
+    }
+
     equals(other: BattleStatus): boolean {
         return this.value === other.value;
     }

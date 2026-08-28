@@ -5,7 +5,7 @@ import BattleStatusEnum from "./enums/battle-status.enum";
 import BattleId from "./value-objects/battle-id.vo";
 import ProfileId from "../profile/value-objects/profile-id.vo";
 
-type BattleEntityProps = {
+export type BattleEntityProps = {
     id?: BattleId;
     playerIds: BattlePlayerIds;
     board?: Board;
