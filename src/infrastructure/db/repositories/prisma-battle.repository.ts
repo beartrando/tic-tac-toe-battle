@@ -63,7 +63,7 @@ export class PrismaBattleRepository implements BattleRepository {
                 },
                 status: {
                     in: [
-                        BattleStatus.New,
+                        BattleStatus.Created,
                         BattleStatus.Ready,
                         BattleStatus.Active,
                     ],
@@ -86,7 +86,7 @@ export class PrismaBattleRepository implements BattleRepository {
         const updated = await this.prisma.battle.updateMany({
             where: {
                 id: battleId.value,
-                status: BattleStatus.New,
+                status: BattleStatus.Created,
             },
             data: {
                 playerIds: {
@@ -113,11 +113,11 @@ export class PrismaBattleRepository implements BattleRepository {
         return BattleDbMapper.toDomain(battle);
     }
 
-    async findNewForProfile(profileId: ProfileId): Promise<BattleEntity | null> {
+    async findCreatedForProfile(profileId: ProfileId): Promise<BattleEntity | null> {
 
         const battle = await this.prisma.battle.findFirst({
             where: {
-                status: BattleStatus.New,
+                status: BattleStatus.Created,
                 NOT: {
                     playerIds: {
                         has: profileId.value,

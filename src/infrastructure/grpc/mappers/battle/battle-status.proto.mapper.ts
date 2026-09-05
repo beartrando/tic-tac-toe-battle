@@ -8,8 +8,8 @@ export class BattleStatusProtoMapper {
         status: BattleStatus,
     ): battleProto.BattleStatus {
         switch (status.value) {
-            case BattleStatusEnum.New:
-                return battleProto.BattleStatus.NEW;
+            case BattleStatusEnum.Created:
+                return battleProto.BattleStatus.CREATED;
             case BattleStatusEnum.Ready:
                 return battleProto.BattleStatus.READY;
             case BattleStatusEnum.Active:
@@ -25,8 +25,8 @@ export class BattleStatusProtoMapper {
         status: battleProto.BattleStatus,
     ): BattleStatus {
         switch (status) {
-            case battleProto.BattleStatus.NEW:
-                return new BattleStatus(BattleStatusEnum.New);
+            case battleProto.BattleStatus.CREATED:
+                return new BattleStatus(BattleStatusEnum.Created);
             case battleProto.BattleStatus.READY:
                 return new BattleStatus(BattleStatusEnum.Ready);
             case battleProto.BattleStatus.ACTIVE:

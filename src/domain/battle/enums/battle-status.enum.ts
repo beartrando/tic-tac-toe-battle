@@ -1,6 +1,6 @@
 export enum BattleStatusEnum {
     Unknown = "Unknown",
-    New = "New",
+    Created = "Created",
     Ready = "Ready",
     Active = "Active",
     Finished = "Finished",

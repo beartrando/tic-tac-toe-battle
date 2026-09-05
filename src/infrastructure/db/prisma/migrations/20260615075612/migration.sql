@@ -2,7 +2,7 @@
 CREATE TYPE "BattleCellValue" AS ENUM ('X', 'O', 'EMPTY');
 
 -- CreateEnum
-CREATE TYPE "BattleStatus" AS ENUM ('New', 'Active', 'Finished');
+CREATE TYPE "BattleStatus" AS ENUM ('Created', 'Active', 'Finished');
 
 -- CreateTable
 CREATE TABLE "Battle"

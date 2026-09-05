@@ -16,7 +16,7 @@ enum BattleCellValue {
 }
 
 enum BattleStatus {
-  New
+  Created
   Ready
   Active
   Finished
