@@ -1,4 +1,4 @@
 export const messageProducersConfig: Record<string, string> = {
-    battleStarted: process.env.MESSAGE_PRODUCER_TOPIC_BATTLE_STARTED ?? 'battle.started',
+    battleCreated: process.env.MESSAGE_PRODUCER_TOPIC_BATTLE_CREATED ?? 'battle.created',
 };
 export default messageProducersConfig;

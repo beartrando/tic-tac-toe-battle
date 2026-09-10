@@ -21,7 +21,7 @@ export class BattleEntity {
         readonly id: BattleId,
         readonly playerIds: BattlePlayerIds,
         readonly board: Board,
-        readonly status: BattleStatus,
+        public status: BattleStatus,
         readonly winnerId: ProfileId | null,
         readonly lastMoveAt: Date | null,
         readonly createdAt: Date,
@@ -48,6 +48,10 @@ export class BattleEntity {
         return BattleEntity.create({playerIds: new BattlePlayerIds([profileId])});
     }
 
+    cancel(): BattleEntity {
+        this.status = BattleStatus.create(BattleStatusEnum.Cancelled);
+        return this;
+    }
 }
 
 export default BattleEntity;

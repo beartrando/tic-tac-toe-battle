@@ -12,10 +12,12 @@ export class BattleStatusProtoMapper {
                 return battleProto.BattleStatus.CREATED;
             case BattleStatusEnum.Ready:
                 return battleProto.BattleStatus.READY;
-            case BattleStatusEnum.Active:
-                return battleProto.BattleStatus.ACTIVE;
+            case BattleStatusEnum.Started:
+                return battleProto.BattleStatus.STARTED;
             case BattleStatusEnum.Finished:
                 return battleProto.BattleStatus.FINISHED;
+            case BattleStatusEnum.Cancelled:
+                return battleProto.BattleStatus.CANCELLED;
             default:
                 return battleProto.BattleStatus.UNKNOWN;
         }
@@ -29,10 +31,12 @@ export class BattleStatusProtoMapper {
                 return new BattleStatus(BattleStatusEnum.Created);
             case battleProto.BattleStatus.READY:
                 return new BattleStatus(BattleStatusEnum.Ready);
-            case battleProto.BattleStatus.ACTIVE:
-                return new BattleStatus(BattleStatusEnum.Active);
+            case battleProto.BattleStatus.STARTED:
+                return new BattleStatus(BattleStatusEnum.Started);
             case battleProto.BattleStatus.FINISHED:
                 return new BattleStatus(BattleStatusEnum.Finished);
+            case battleProto.BattleStatus.CANCELLED:
+                return new BattleStatus(BattleStatusEnum.Cancelled);
             default:
                 return new BattleStatus(BattleStatusEnum.Unknown);
         }

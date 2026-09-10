@@ -2,21 +2,21 @@ import * as grpc from '@grpc/grpc-js';
 import * as profileProto from '../../../contracts/proto/profile';
 import * as battleProto from '../../../contracts/proto/battle';
 import logger from "@shared/logger";
-import GetUseCase from "../../../application/use-cases/battle/get";
+import BattleGetUseCase from "../../../application/use-cases/battle/battle-get";
 import callbackError from "./callback.error";
 import BattleProtoMapper from "../mappers/battle.proto.mapper";
 import {NotFoundError} from "@shared/errors";
-import StartUseCase from "../../../application/use-cases/battle/start";
-import GetActiveByProfileUseCase from "../../../application/use-cases/battle/get-active-by-profile";
+import BattleCreateUseCase from "../../../application/use-cases/battle/battle-create";
+import BattleGetUnfinishedByProfileUseCase from "../../../application/use-cases/battle/battle-get-unfinished-by-profile";
 import BattleId from "../../../domain/battle/value-objects/battle-id.vo";
 import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
 
 
 export class BattleHandler {
     constructor(
-        private readonly getUseCase: GetUseCase,
-        private readonly getActiveByProfileUseCase: GetActiveByProfileUseCase,
-        private readonly startUseCase: StartUseCase
+        private readonly getUseCase: BattleGetUseCase,
+        private readonly getUnfinishedByProfileUseCase: BattleGetUnfinishedByProfileUseCase,
+        private readonly createUseCase: BattleCreateUseCase
     ) {
     }
 
@@ -45,14 +45,14 @@ export class BattleHandler {
     }
 
 
-    async getActiveByProfile(
+    async getUnfinishedByProfile(
         call: grpc.ServerUnaryCall<profileProto.ProfileIdRequest, battleProto.BattlesResponse>,
         callback: grpc.sendUnaryData<battleProto.BattlesResponse>
     ) {
         try {
             const {profileId} = call.request;
 
-            const battle = await this.getActiveByProfileUseCase.execute(new ProfileId(profileId));
+            const battle = await this.getUnfinishedByProfileUseCase.execute(new ProfileId(profileId));
 
             const result = battleProto.BattlesResponse.create({battles: {items: [...battle].map(BattleProtoMapper.toProto)}});
 
@@ -64,8 +64,8 @@ export class BattleHandler {
         }
     }
 
-    async start(
-        call: grpc.ServerUnaryCall<battleProto.BattleStartRequest, battleProto.BattleResponse>,
+    async create(
+        call: grpc.ServerUnaryCall<battleProto.BattleCreateRequest, battleProto.BattleResponse>,
         callback: grpc.sendUnaryData<battleProto.BattleResponse>
     ) {
 
@@ -74,7 +74,7 @@ export class BattleHandler {
 
             // logger.log(profileId);
             // logger.log(battleId);
-            const battle = await this.startUseCase.execute(new ProfileId(profileId), battleId ? new BattleId(battleId) : null);
+            const battle = await this.createUseCase.execute(new ProfileId(profileId), battleId ? new BattleId(battleId) : null);
 
             const result = battleProto.BattleResponse.create({battle: BattleProtoMapper.toProto(battle)});
 

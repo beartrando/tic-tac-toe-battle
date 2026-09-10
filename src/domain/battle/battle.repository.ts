@@ -13,6 +13,9 @@ export interface BattleRepository {
     join(profileId: ProfileId, battleId: BattleId): Promise<BattleEntity | null>;
 
     findCreatedForProfile(profileId: ProfileId): Promise<BattleEntity | null>;
+
+    findCreatedByProfile(battleId: BattleId, profileId: ProfileId): Promise<BattleEntity | null>;
+
 }
 
 export default BattleRepository;

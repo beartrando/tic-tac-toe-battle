@@ -13,8 +13,8 @@ export class BattleId {
         }
     }
 
-    static create(): BattleId {
-        return new BattleId(randomUUID());
+    static create(id?: string): BattleId {
+        return id ? new BattleId(id) : new BattleId(randomUUID());
     }
 
     equals(other: BattleId): boolean {

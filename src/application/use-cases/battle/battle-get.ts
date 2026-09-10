@@ -2,7 +2,7 @@ import BattleRepository from "../../../domain/battle/battle.repository";
 import BattleEntity from "../../../domain/battle/battle.entity";
 import BattleId from "../../../domain/battle/value-objects/battle-id.vo";
 
-export class GetUseCase {
+export class BattleGetUseCase {
     constructor(
         private readonly battleRepository: BattleRepository,
     ) {
@@ -20,5 +20,5 @@ export class GetUseCase {
 }
 
 
-export default GetUseCase;
+export default BattleGetUseCase;
 

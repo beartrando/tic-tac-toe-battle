@@ -2,8 +2,9 @@ export enum BattleStatusEnum {
     Unknown = "Unknown",
     Created = "Created",
     Ready = "Ready",
-    Active = "Active",
+    Started = "Started",
     Finished = "Finished",
+    Cancelled = "Cancelled",
 }
 
 export default BattleStatusEnum;

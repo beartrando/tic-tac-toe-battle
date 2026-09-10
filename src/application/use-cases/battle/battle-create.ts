@@ -7,11 +7,11 @@ import BattleStatusEnum from "../../../domain/battle/enums/battle-status.enum";
 import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
 import BattleId from "../../../domain/battle/value-objects/battle-id.vo";
 
-export class StartUseCase {
+export class BattleCreateUseCase {
     constructor(
         private readonly battleRepository: BattleRepository,
         private readonly jobService: JobService,
-        private readonly battleStartedTopik: string,
+        private readonly battleCreatedTopik: string,
     ) {
     }
 
@@ -69,11 +69,11 @@ export class StartUseCase {
 
     private enqueue(battle: BattleEntity): void {
         if (battle.status.value == BattleStatusEnum.Ready) {
-            this.jobService.enqueue(this.battleStartedTopik, BattleProtoMapper.toProto(battle));
+            this.jobService.enqueue(this.battleCreatedTopik, BattleProtoMapper.toProto(battle));
         }
     }
 }
 
 
-export default StartUseCase;
+export default BattleCreateUseCase;
 

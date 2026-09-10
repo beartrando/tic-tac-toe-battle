@@ -65,7 +65,7 @@ export class PrismaBattleRepository implements BattleRepository {
                     in: [
                         BattleStatus.Created,
                         BattleStatus.Ready,
-                        BattleStatus.Active,
+                        BattleStatus.Started,
                     ],
                 },
             },
@@ -113,6 +113,25 @@ export class PrismaBattleRepository implements BattleRepository {
         return BattleDbMapper.toDomain(battle);
     }
 
+
+    async findCreatedByProfile(battleId: BattleId, profileId: ProfileId): Promise<BattleEntity | null> {
+
+        const battle = await this.prisma.battle.findFirst({
+            where: {
+                status: BattleStatus.Created,
+                playerIds: {
+                    has: profileId.value,
+                },
+            },
+        });
+
+        if (!battle) {
+            return null;
+        }
+
+        return BattleDbMapper.toDomain(battle);
+    }
+
     async findCreatedForProfile(profileId: ProfileId): Promise<BattleEntity | null> {
 
         const battle = await this.prisma.battle.findFirst({
@@ -123,9 +142,6 @@ export class PrismaBattleRepository implements BattleRepository {
                         has: profileId.value,
                     },
                 },
-            },
-            orderBy: {
-                createdAt: "asc",
             },
         });
 

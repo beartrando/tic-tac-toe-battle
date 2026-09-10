@@ -18,8 +18,9 @@ enum BattleCellValue {
 enum BattleStatus {
   Created
   Ready
-  Active
+  Started
   Finished
+  Cancelled
 }
 
 model Battle {

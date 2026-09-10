@@ -1,7 +1,7 @@
 import BattleRepository from "../../../domain/battle/battle.repository";
 import BattleEntity from "../../../domain/battle/battle.entity";
 
-export class UpdateUseCase {
+export class BattleUpdateUseCase {
     constructor(
         private readonly battleRepository: BattleRepository,
     ) {
@@ -13,5 +13,5 @@ export class UpdateUseCase {
 }
 
 
-export default UpdateUseCase;
+export default BattleUpdateUseCase;
 

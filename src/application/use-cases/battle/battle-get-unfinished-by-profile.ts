@@ -2,7 +2,7 @@ import BattleRepository from "../../../domain/battle/battle.repository";
 import BattleEntity from "../../../domain/battle/battle.entity";
 import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
 
-export class GetActiveByProfileUseCase {
+export class BattleGetUnfinishedByProfileUseCase {
     constructor(
         private readonly battleRepository: BattleRepository,
     ) {
@@ -20,5 +20,5 @@ export class GetActiveByProfileUseCase {
 }
 
 
-export default GetActiveByProfileUseCase;
+export default BattleGetUnfinishedByProfileUseCase;
 

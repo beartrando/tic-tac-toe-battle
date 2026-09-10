@@ -13,10 +13,12 @@ export class BattleStatusMapper {
                 return PrismaBattleStatus.Created;
             case BattleStatusEnum.Ready:
                 return PrismaBattleStatus.Ready;
-            case BattleStatusEnum.Active:
-                return PrismaBattleStatus.Active;
+            case BattleStatusEnum.Started:
+                return PrismaBattleStatus.Started;
             case BattleStatusEnum.Finished:
                 return PrismaBattleStatus.Finished;
+            case BattleStatusEnum.Cancelled:
+                return PrismaBattleStatus.Cancelled;
             default:
                 throw new Error(`Unknown BattleStatus: ${status.value}`);
         }
@@ -30,10 +32,12 @@ export class BattleStatusMapper {
                 return new BattleStatus(BattleStatusEnum.Created);
             case PrismaBattleStatus.Ready:
                 return new BattleStatus(BattleStatusEnum.Ready);
-            case PrismaBattleStatus.Active:
-                return new BattleStatus(BattleStatusEnum.Active);
+            case PrismaBattleStatus.Started:
+                return new BattleStatus(BattleStatusEnum.Started);
             case PrismaBattleStatus.Finished:
                 return new BattleStatus(BattleStatusEnum.Finished);
+            case PrismaBattleStatus.Cancelled:
+                return new BattleStatus(BattleStatusEnum.Cancelled);
             default:
                 throw new Error(`Unknown PrismaBattleStatus: ${status}`);
         }
