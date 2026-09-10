@@ -12,8 +12,8 @@ export class BattleUpdatedConsumer implements UseCaseInterface<BattleObject> {
 
     async execute(topic: string, partition: number, message: BattleObject): Promise<void> {
         try {
-            logger.log('battleUpdated');
-            logger.log(message);
+            // logger.log('battleUpdated');
+            // logger.log(message);
             await this.updateUseCase.execute(BattleProtoMapper.toDomain(message));
         } catch (error) {
             logger.error(`[Kafka] Failed to process message`, {
