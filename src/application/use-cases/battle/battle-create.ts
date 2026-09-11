@@ -11,7 +11,7 @@ export class BattleCreateUseCase {
     constructor(
         private readonly battleRepository: BattleRepository,
         private readonly jobService: JobService,
-        private readonly battleCreatedTopik: string,
+        private readonly battleMatchedTopik: string,
     ) {
     }
 
@@ -68,8 +68,8 @@ export class BattleCreateUseCase {
     }
 
     private enqueue(battle: BattleEntity): void {
-        if (battle.status.value == BattleStatusEnum.Ready) {
-            this.jobService.enqueue(this.battleCreatedTopik, BattleProtoMapper.toProto(battle));
+        if (battle.status.value == BattleStatusEnum.Matched) {
+            this.jobService.enqueue(this.battleMatchedTopik, BattleProtoMapper.toProto(battle));
         }
     }
 }

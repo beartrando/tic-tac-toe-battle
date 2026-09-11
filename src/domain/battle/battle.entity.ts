@@ -52,6 +52,10 @@ export class BattleEntity {
         this.status = BattleStatus.create(BattleStatusEnum.Cancelled);
         return this;
     }
+
+    finished(): boolean {
+        return this.status.equals(BattleStatus.create(BattleStatusEnum.Finished));
+    }
 }
 
 export default BattleEntity;

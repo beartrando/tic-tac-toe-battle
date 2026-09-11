@@ -10,7 +10,7 @@ export class BattleTerminatedConsumer implements UseCaseInterface<BattleId> {
     }
 
     async execute(topic: string, partition: number, message: BattleId): Promise<void> {
-        logger.log(message);
+        // logger.log(message);
         try {
             await this.terminateUseCase.execute(message);
         } catch (error) {

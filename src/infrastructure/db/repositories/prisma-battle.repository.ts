@@ -65,6 +65,7 @@ export class PrismaBattleRepository implements BattleRepository {
                     in: [
                         BattleStatus.Created,
                         BattleStatus.Ready,
+                        BattleStatus.Matched,
                         BattleStatus.Started,
                     ],
                 },
@@ -92,7 +93,7 @@ export class PrismaBattleRepository implements BattleRepository {
                 playerIds: {
                     push: profileId.value,
                 },
-                status: BattleStatus.Ready,
+                status: BattleStatus.Matched,
             },
         });
 
@@ -154,9 +155,4 @@ export class PrismaBattleRepository implements BattleRepository {
 }
 
 export default PrismaBattleRepository;
-
-
-
-
-
 

@@ -55,7 +55,7 @@ function buildApplication() {
 
     const battleGetUseCase = new BattleGetUseCase(battleRepository);
     const battleGetUnfinishedByProfileUseCase = new BattleGetUnfinishedByProfileUseCase(battleRepository);
-    const battleCreateUseCase = new BattleCreateUseCase(battleRepository, jobService, messageProducersConfig.battleCreated);
+    const battleCreateUseCase = new BattleCreateUseCase(battleRepository, jobService, messageProducersConfig.battleMatched);
 
     const healthUseCase = new HealthUseCase(dbService, messageService, jobService);
     const statusUseCase = new StatusUseCase;

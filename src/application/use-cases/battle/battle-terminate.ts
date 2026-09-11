@@ -8,10 +8,14 @@ export class BattleTerminateUseCase {
     ) {
     }
 
-    async execute(battleId: BattleId): Promise<BattleEntity|null> {
+    async execute(battleId: BattleId): Promise<BattleEntity | null> {
 
         const battle = await this.battleRepository.findById(battleId);
         if (!battle) {
+            return null;
+        }
+
+        if (battle.finished()) {
             return null;
         }
         battle.cancel();

@@ -17,6 +17,7 @@ enum BattleCellValue {
 
 enum BattleStatus {
   Created
+  Matched
   Ready
   Started
   Finished
