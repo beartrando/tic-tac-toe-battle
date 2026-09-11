@@ -12,7 +12,6 @@ import DbService from "../infrastructure/db/service";
 import jobConfig from "../infrastructure/job/config";
 import PrismaBattleRepository from "../infrastructure/db/repositories/prisma-battle.repository";
 import BattleGetUseCase from "../application/use-cases/battle/battle-get";
-import BattleGetUnfinishedByProfileUseCase from "../application/use-cases/battle/battle-get-unfinished-by-profile";
 import BattleInitUseCase from "../application/use-cases/battle/battle-init";
 import BattleHandler from "../infrastructure/grpc/handlers/battle.handler";
 import BattleUpdatedConsumer from "../infrastructure/message/consumers/battle-updated";
@@ -24,7 +23,6 @@ import AuthService from "../infrastructure/auth/service";
 import authConfig from "../infrastructure/auth/config";
 import BattleTerminatedConsumer from "../infrastructure/message/consumers/battle-terminated";
 import BattleTerminateUseCase from "../application/use-cases/battle/battle-terminate";
-import logger from "@shared/logger";
 
 
 function buildApplication() {
@@ -54,8 +52,7 @@ function buildApplication() {
     );
 
     const battleGetUseCase = new BattleGetUseCase(battleRepository);
-    const battleGetUnfinishedByProfileUseCase = new BattleGetUnfinishedByProfileUseCase(battleRepository);
-    const battleCreateUseCase = new BattleInitUseCase(battleRepository, jobService, messageProducersConfig.battleMatched);
+    const battleInitUseCase = new BattleInitUseCase(battleRepository, jobService, messageProducersConfig.battleMatched);
 
     const healthUseCase = new HealthUseCase(dbService, messageService, jobService);
     const statusUseCase = new StatusUseCase;
@@ -64,8 +61,7 @@ function buildApplication() {
 
     const battleHandler = new BattleHandler(
         battleGetUseCase,
-        battleGetUnfinishedByProfileUseCase,
-        battleCreateUseCase,
+        battleInitUseCase,
     );
 
     const healthHandler = new HealthHandler(healthUseCase, statusUseCase, livezUseCase, readyzUseCase);

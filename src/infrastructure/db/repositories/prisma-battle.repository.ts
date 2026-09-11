@@ -52,7 +52,7 @@ export class PrismaBattleRepository implements BattleRepository {
         return BattleDbMapper.toDomain(result);
     }
 
-    async findUnfinishedByProfileId(
+    async findCreatedByProfileId(
         profileId: ProfileId,
     ): Promise<Set<BattleEntity> | null> {
 
@@ -64,9 +64,6 @@ export class PrismaBattleRepository implements BattleRepository {
                 status: {
                     in: [
                         BattleStatus.Created,
-                        BattleStatus.Ready,
-                        BattleStatus.Matched,
-                        BattleStatus.Started,
                     ],
                 },
             },

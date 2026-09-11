@@ -21,11 +21,11 @@ export class BattleInitUseCase {
             try {
                 battle = await this.battleRepository.join(profileId, battleId);
             } catch (e) {
-                throw new NotFoundError('engine ' + battleId.value);
+                throw new NotFoundError('battle ' + battleId.value);
             }
 
             if (!battle) {
-                throw new NotFoundError('engine ' + battleId.value);
+                throw new NotFoundError('battle ' + battleId.value);
             }
 
             this.enqueue(battle);
@@ -33,12 +33,11 @@ export class BattleInitUseCase {
             return battle;
         }
 
-        const existingMyBattles = await this.battleRepository.findUnfinishedByProfileId(profileId);
+        const existingMyBattles = await this.battleRepository.findCreatedByProfileId(profileId);
 
         const existingMyBattle = existingMyBattles?.values().next().value;
 
         if (existingMyBattle) {
-            this.enqueue(existingMyBattle);
             return existingMyBattle;
         }
 
