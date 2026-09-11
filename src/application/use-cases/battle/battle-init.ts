@@ -7,7 +7,7 @@ import BattleStatusEnum from "../../../domain/battle/enums/battle-status.enum";
 import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
 import BattleId from "../../../domain/battle/value-objects/battle-id.vo";
 
-export class BattleCreateUseCase {
+export class BattleInitUseCase {
     constructor(
         private readonly battleRepository: BattleRepository,
         private readonly jobService: JobService,
@@ -75,5 +75,5 @@ export class BattleCreateUseCase {
 }
 
 
-export default BattleCreateUseCase;
+export default BattleInitUseCase;
 

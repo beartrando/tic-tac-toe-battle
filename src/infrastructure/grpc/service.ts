@@ -51,7 +51,7 @@ export class GrpcService {
         this.server.addService(battleProto.BattleService, {
             get: this.battleHandler.get.bind(this.battleHandler),
             getUnfinishedByProfile: this.battleHandler.getUnfinishedByProfile.bind(this.battleHandler),
-            create: this.battleHandler.create.bind(this.battleHandler),
+            init: this.battleHandler.init.bind(this.battleHandler),
         });
     }
 

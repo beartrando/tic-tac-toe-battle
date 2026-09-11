@@ -6,7 +6,7 @@ import BattleGetUseCase from "../../../application/use-cases/battle/battle-get";
 import callbackError from "./callback.error";
 import BattleProtoMapper from "../mappers/battle.proto.mapper";
 import {NotFoundError} from "@shared/errors";
-import BattleCreateUseCase from "../../../application/use-cases/battle/battle-create";
+import BattleInitUseCase from "../../../application/use-cases/battle/battle-init";
 import BattleGetUnfinishedByProfileUseCase from "../../../application/use-cases/battle/battle-get-unfinished-by-profile";
 import BattleId from "../../../domain/battle/value-objects/battle-id.vo";
 import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
@@ -16,7 +16,7 @@ export class BattleHandler {
     constructor(
         private readonly getUseCase: BattleGetUseCase,
         private readonly getUnfinishedByProfileUseCase: BattleGetUnfinishedByProfileUseCase,
-        private readonly createUseCase: BattleCreateUseCase
+        private readonly createUseCase: BattleInitUseCase
     ) {
     }
 
@@ -64,8 +64,8 @@ export class BattleHandler {
         }
     }
 
-    async create(
-        call: grpc.ServerUnaryCall<battleProto.BattleCreateRequest, battleProto.BattleResponse>,
+    async init(
+        call: grpc.ServerUnaryCall<battleProto.BattleInitRequest, battleProto.BattleResponse>,
         callback: grpc.sendUnaryData<battleProto.BattleResponse>
     ) {
 

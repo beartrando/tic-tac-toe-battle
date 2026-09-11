@@ -13,7 +13,7 @@ import jobConfig from "../infrastructure/job/config";
 import PrismaBattleRepository from "../infrastructure/db/repositories/prisma-battle.repository";
 import BattleGetUseCase from "../application/use-cases/battle/battle-get";
 import BattleGetUnfinishedByProfileUseCase from "../application/use-cases/battle/battle-get-unfinished-by-profile";
-import BattleCreateUseCase from "../application/use-cases/battle/battle-create";
+import BattleInitUseCase from "../application/use-cases/battle/battle-init";
 import BattleHandler from "../infrastructure/grpc/handlers/battle.handler";
 import BattleUpdatedConsumer from "../infrastructure/message/consumers/battle-updated";
 import BattleUpdateUseCase from "../application/use-cases/battle/battle-update";
@@ -55,7 +55,7 @@ function buildApplication() {
 
     const battleGetUseCase = new BattleGetUseCase(battleRepository);
     const battleGetUnfinishedByProfileUseCase = new BattleGetUnfinishedByProfileUseCase(battleRepository);
-    const battleCreateUseCase = new BattleCreateUseCase(battleRepository, jobService, messageProducersConfig.battleMatched);
+    const battleCreateUseCase = new BattleInitUseCase(battleRepository, jobService, messageProducersConfig.battleMatched);
 
     const healthUseCase = new HealthUseCase(dbService, messageService, jobService);
     const statusUseCase = new StatusUseCase;
