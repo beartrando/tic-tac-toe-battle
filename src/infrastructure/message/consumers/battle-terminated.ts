@@ -24,4 +24,3 @@ export class BattleTerminatedConsumer implements UseCaseInterface<BattleId> {
 }
 
 export default BattleTerminatedConsumer;
-

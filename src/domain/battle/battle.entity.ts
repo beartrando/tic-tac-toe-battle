@@ -59,4 +59,3 @@ export class BattleEntity {
 }
 
 export default BattleEntity;
-

@@ -152,4 +152,3 @@ export class PrismaBattleRepository implements BattleRepository {
 }
 
 export default PrismaBattleRepository;
-

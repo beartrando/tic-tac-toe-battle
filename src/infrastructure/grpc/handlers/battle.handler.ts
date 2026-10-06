@@ -71,5 +71,3 @@ export class BattleHandler {
 }
 
 export default BattleHandler;
-
-

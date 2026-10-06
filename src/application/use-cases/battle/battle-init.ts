@@ -75,4 +75,3 @@ export class BattleInitUseCase {
 
 
 export default BattleInitUseCase;
-

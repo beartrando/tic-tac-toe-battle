@@ -26,4 +26,3 @@ export class BattleUpdatedConsumer implements UseCaseInterface<BattleObject> {
 }
 
 export default BattleUpdatedConsumer;
-

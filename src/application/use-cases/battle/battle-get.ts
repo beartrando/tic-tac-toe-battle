@@ -21,4 +21,3 @@ export class BattleGetUseCase {
 
 
 export default BattleGetUseCase;
-

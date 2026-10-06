@@ -25,4 +25,3 @@ export class BattleTerminateUseCase {
 
 
 export default BattleTerminateUseCase;
-
