@@ -6,6 +6,7 @@ import callbackError from "./callback.error";
 import BattleProtoMapper from "../mappers/battle.proto.mapper";
 import {NotFoundError} from "@shared/errors";
 import BattleInitUseCase from "../../../application/use-cases/battle/battle-init";
+import BattleGetManyUseCase from "../../../application/use-cases/battle/battle-get-many";
 import BattleId from "../../../domain/battle/value-objects/battle-id.vo";
 import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
 
@@ -13,8 +14,34 @@ import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
 export class BattleHandler {
     constructor(
         private readonly getUseCase: BattleGetUseCase,
+        private readonly getManyUseCase: BattleGetManyUseCase,
         private readonly initUseCase: BattleInitUseCase
     ) {
+    }
+
+    async getMany(
+        call: grpc.ServerUnaryCall<battleProto.BattleIdsRequest, battleProto.BattlesResponse>,
+        callback: grpc.sendUnaryData<battleProto.BattlesResponse>
+    ) {
+        try {
+            const {battleIds} = call.request;
+
+            const battles = await this.getManyUseCase.execute(
+                (battleIds ?? []).map((battleId) => new BattleId(battleId)),
+            );
+
+            const result = battleProto.BattlesResponse.create({
+                battles: battleProto.BattleList.create({
+                    items: battles.map(BattleProtoMapper.toProto),
+                }),
+            });
+
+            callback(null, result);
+
+        } catch (err: any) {
+            logger.log(err);
+            callbackError(callback, err);
+        }
     }
 
     async get(

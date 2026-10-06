@@ -21,6 +21,8 @@ export class BattleStatusMapper {
                 return PrismaBattleStatus.Finished;
             case BattleStatusEnum.Cancelled:
                 return PrismaBattleStatus.Cancelled;
+            case BattleStatusEnum.TimeOut:
+                return PrismaBattleStatus.TimeOut;
             default:
                 throw new Error(`Unknown BattleStatus: ${status.value}`);
         }
@@ -42,6 +44,8 @@ export class BattleStatusMapper {
                 return new BattleStatus(BattleStatusEnum.Finished);
             case PrismaBattleStatus.Cancelled:
                 return new BattleStatus(BattleStatusEnum.Cancelled);
+            case PrismaBattleStatus.TimeOut:
+                return new BattleStatus(BattleStatusEnum.TimeOut);
             default:
                 throw new Error(`Unknown PrismaBattleStatus: ${status}`);
         }
