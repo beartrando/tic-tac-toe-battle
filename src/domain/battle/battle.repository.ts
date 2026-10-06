@@ -6,6 +6,10 @@ export interface BattleRepository {
 
     findById(id: BattleId): Promise<BattleEntity | null>;
 
+    findByIds(ids: BattleId[]): Promise<BattleEntity[]>;
+
+    findStale(since: Date): Promise<BattleEntity[]>;
+
     save(user: BattleEntity): Promise<BattleEntity>;
 
     findCreatedByProfileId(profileId: ProfileId): Promise<Set<BattleEntity> | null>;

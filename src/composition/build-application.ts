@@ -23,6 +23,10 @@ import AuthService from "../infrastructure/auth/service";
 import authConfig from "../infrastructure/auth/config";
 import BattleTerminatedConsumer from "../infrastructure/message/consumers/battle-terminated";
 import BattleTerminateUseCase from "../application/use-cases/battle/battle-terminate";
+import BattleGetManyUseCase from "../application/use-cases/battle/battle-get-many";
+import BattleTimeoutSweepUseCase from "../application/use-cases/battle/battle-timeout-sweep";
+import BattleTimeoutSweepService from "../infrastructure/timeout/service";
+import timeoutConfig from "../infrastructure/timeout/config";
 
 
 function buildApplication() {
@@ -52,7 +56,20 @@ function buildApplication() {
     );
 
     const battleGetUseCase = new BattleGetUseCase(battleRepository);
+    const battleGetManyUseCase = new BattleGetManyUseCase(battleRepository);
     const battleInitUseCase = new BattleInitUseCase(battleRepository, jobService, messageProducersConfig.battleMatched);
+
+    const battleTimeoutSweepUseCase = new BattleTimeoutSweepUseCase(
+        battleRepository,
+        jobService,
+        messageProducersConfig.battleTimeout,
+        timeoutConfig.statusTimeoutSeconds,
+    );
+
+    const battleTimeoutSweepService = new BattleTimeoutSweepService(
+        battleTimeoutSweepUseCase,
+        timeoutConfig.sweepSeconds,
+    );
 
     const healthUseCase = new HealthUseCase(dbService, messageService, jobService);
     const statusUseCase = new StatusUseCase;
@@ -61,6 +78,7 @@ function buildApplication() {
 
     const battleHandler = new BattleHandler(
         battleGetUseCase,
+        battleGetManyUseCase,
         battleInitUseCase,
     );
 
@@ -68,7 +86,7 @@ function buildApplication() {
 
     const grpcService = new GrpcService(grpcConfig.port, battleHandler, healthHandler);
 
-    return new Application(grpcService, dbService, jobService, messageService);
+    return new Application(grpcService, dbService, jobService, messageService, battleTimeoutSweepService);
 }
 
 

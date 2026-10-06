@@ -30,6 +30,24 @@ export class PrismaBattleRepository implements BattleRepository {
         return BattleDbMapper.toDomain(battle);
     }
 
+    async findByIds(
+        ids: BattleId[],
+    ): Promise<BattleEntity[]> {
+        if (ids.length === 0) {
+            return [];
+        }
+
+        const battles = await this.prisma.battle.findMany({
+            where: {
+                id: {
+                    in: ids.map((id: BattleId) => id.value),
+                },
+            },
+        });
+
+        return battles.map(BattleDbMapper.toDomain);
+    }
+
     async save(
         battle: BattleEntity,
     ): Promise<BattleEntity> {
@@ -50,6 +68,30 @@ export class PrismaBattleRepository implements BattleRepository {
         });
 
         return BattleDbMapper.toDomain(result);
+    }
+
+    async findStale(
+        since: Date,
+    ): Promise<BattleEntity[]> {
+        const battles = await this.prisma.battle.findMany({
+            where: {
+                status: {
+                    notIn: [
+                        BattleStatus.Finished,
+                        BattleStatus.Cancelled,
+                        BattleStatus.TimeOut,
+                    ],
+                },
+                updatedAt: {
+                    lt: since,
+                },
+            },
+            orderBy: {
+                updatedAt: "asc",
+            },
+        });
+
+        return battles.map(BattleDbMapper.toDomain);
     }
 
     async findCreatedByProfileId(

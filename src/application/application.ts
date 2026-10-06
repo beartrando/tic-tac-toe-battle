@@ -3,6 +3,7 @@ import GrpcService from "../infrastructure/grpc/service";
 import DbService from "../infrastructure/db/service";
 import JobService from "../infrastructure/job/service";
 import MessageService from "../infrastructure/message/service";
+import BattleTimeoutSweepService from "../infrastructure/timeout/service";
 
 export class Application {
     constructor(
@@ -10,6 +11,7 @@ export class Application {
         private readonly dbService: DbService,
         private readonly jobService: JobService,
         private readonly messageService: MessageService,
+        private readonly battleTimeoutSweepService: BattleTimeoutSweepService,
     ) {
     }
 
@@ -30,6 +32,7 @@ export class Application {
             await this.jobService.start();
             await this.dbService.start();
             await this.grpcService.start();
+            this.battleTimeoutSweepService.start();
             logger.info(
                 '🚀 Battle service started',
             );
@@ -43,6 +46,7 @@ export class Application {
     }
 
     async stop() {
+        this.battleTimeoutSweepService.stop();
         await this.grpcService.stop();
         await this.dbService.stop();
         await this.jobService.stop();

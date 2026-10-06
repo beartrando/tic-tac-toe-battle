@@ -53,6 +53,17 @@ export class BattleEntity {
         return this;
     }
 
+    timeout(): BattleEntity {
+        this.status = BattleStatus.create(BattleStatusEnum.TimeOut);
+        return this;
+    }
+
+    final(): boolean {
+        return this.finished()
+            || this.status.equals(BattleStatus.create(BattleStatusEnum.Cancelled))
+            || this.status.equals(BattleStatus.create(BattleStatusEnum.TimeOut));
+    }
+
     finished(): boolean {
         return this.status.equals(BattleStatus.create(BattleStatusEnum.Finished));
     }
