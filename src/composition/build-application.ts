@@ -25,8 +25,10 @@ import BattleTerminatedConsumer from "../infrastructure/message/consumers/battle
 import BattleTerminateUseCase from "../application/use-cases/battle/battle-terminate";
 import BattleGetManyUseCase from "../application/use-cases/battle/battle-get-many";
 import BattleTimeoutSweepUseCase from "../application/use-cases/battle/battle-timeout-sweep";
-import BattleTimeoutSweepService from "../infrastructure/timeout/service";
-import timeoutConfig from "../infrastructure/timeout/config";
+import TimerService from "../infrastructure/timer/service";
+import TimerCallbackFactoryHolder from "../infrastructure/timer/callback-factory-holder";
+import BattleTimeoutCallbackFactory from "../infrastructure/timer/callbacks/battle-timeout-callback-factory";
+import timeoutConfig from "../infrastructure/timer/config/config";
 
 
 function buildApplication() {
@@ -66,10 +68,19 @@ function buildApplication() {
         timeoutConfig.statusTimeoutSeconds,
     );
 
-    const battleTimeoutSweepService = new BattleTimeoutSweepService(
-        battleTimeoutSweepUseCase,
+    const battleTimeoutCallbackFactoryHolder = new TimerCallbackFactoryHolder<string>();
+
+    const battleTimeoutTimerService = new TimerService<string, string>(
+        battleTimeoutCallbackFactoryHolder,
         timeoutConfig.sweepSeconds,
     );
+
+    const battleTimeoutCallbackFactory = new BattleTimeoutCallbackFactory(
+        battleTimeoutSweepUseCase,
+        battleTimeoutTimerService,
+    );
+
+    battleTimeoutCallbackFactoryHolder.factory = battleTimeoutCallbackFactory;
 
     const healthUseCase = new HealthUseCase(dbService, messageService, jobService);
     const statusUseCase = new StatusUseCase;
@@ -86,7 +97,14 @@ function buildApplication() {
 
     const grpcService = new GrpcService(grpcConfig.port, battleHandler, healthHandler);
 
-    return new Application(grpcService, dbService, jobService, messageService, battleTimeoutSweepService);
+    return new Application(
+        grpcService,
+        dbService,
+        jobService,
+        messageService,
+        battleTimeoutTimerService,
+        timeoutConfig.sweepTimerKey,
+    );
 }
 
 

@@ -45,8 +45,8 @@ export class BattleHandler {
     }
 
     async get(
-        call: grpc.ServerUnaryCall<battleProto.BattleIdRequest, battleProto.BattleResponse>,
-        callback: grpc.sendUnaryData<battleProto.BattleResponse>
+        call: grpc.ServerUnaryCall<battleProto.BattleIdRequest, battleProto.BattlesResponse>,
+        callback: grpc.sendUnaryData<battleProto.BattlesResponse>
     ) {
         try {
             const {battleId} = call.request;
@@ -54,11 +54,12 @@ export class BattleHandler {
 
             const battle = await this.getUseCase.execute(new BattleId(battleId));
 
-            const result = battleProto.BattleResponse.create({battle: BattleProtoMapper.toProto(battle)});
-
-            if (!result) {
-                throw new NotFoundError('Battle');
-            }
+            // контракт метода — BattlesResponse (стримминг читает `battles.items`)
+            const result = battleProto.BattlesResponse.create({
+                battles: battleProto.BattleList.create({
+                    items: [BattleProtoMapper.toProto(battle)],
+                }),
+            });
 
             callback(null, result);
 
