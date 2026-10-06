@@ -18,7 +18,6 @@ COPY services/battle/package*.json ./services/battle/
 COPY services/battle/jest.config.js ./services/battle/
 COPY services/battle/tsconfig.json ./services/battle/
 COPY services/battle/src ./services/battle/src/
-COPY services/battle/__tests__ ./services/battle/__tests__/
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
