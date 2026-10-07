@@ -39,6 +39,13 @@ RUN pnpm install --offline --frozen-lockfile --ignore-scripts
 RUN mkdir -p ./services/battle/src/contracts/proto
 RUN pnpm --filter battle proto:generate
 
+RUN pnpm --filter @shared/logger build
+RUN pnpm --filter @shared/grpc-client-manager build
+RUN pnpm --filter @shared/errors proto:generate
+RUN pnpm --filter @shared/errors build
+RUN pnpm --filter @shared/kafka-manager build
+RUN pnpm --filter @shared/pg-boss-manager build
+
 RUN pnpm --filter battle prisma:generate
 
 # ---------- DEV ----------
@@ -47,13 +54,6 @@ FROM deps AS dev
 COPY services/battle/tsconfig.test.json ./services/battle/
 
 ENV NODE_ENV=development
-
-RUN pnpm --filter @shared/logger build
-RUN pnpm --filter @shared/grpc-client-manager build
-RUN pnpm --filter @shared/errors proto:generate
-RUN pnpm --filter @shared/errors build
-RUN pnpm --filter @shared/kafka-manager build
-RUN pnpm --filter @shared/pg-boss-manager build
 
 RUN chown -R node:node /usr/src/app
 
