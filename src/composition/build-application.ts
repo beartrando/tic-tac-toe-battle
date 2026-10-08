@@ -25,7 +25,7 @@ import BattleTerminatedConsumer from "../infrastructure/message/consumers/battle
 import BattleTerminateUseCase from "../application/use-cases/battle/battle-terminate";
 import BattleGetManyUseCase from "../application/use-cases/battle/battle-get-many";
 import BattleTimeoutSweepUseCase from "../application/use-cases/battle/battle-timeout-sweep";
-import { TimerService } from "@shared/timer";
+import {TimerService} from "@shared/timer";
 import TimerCallbackFactoryHolder from "../infrastructure/timer/callback-factory-holder";
 import BattleTimeoutCallbackFactory from "../infrastructure/timer/callbacks/battle-timeout-callback-factory";
 import timeoutConfig from "../infrastructure/timer/config/config";
