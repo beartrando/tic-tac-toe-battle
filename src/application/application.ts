@@ -3,7 +3,7 @@ import GrpcService from "../infrastructure/grpc/service";
 import DbService from "../infrastructure/db/service";
 import JobService from "../infrastructure/job/service";
 import MessageService from "../infrastructure/message/service";
-import TimerService from "../infrastructure/timer/service";
+import { TimerService } from "@shared/timer";
 
 export class Application {
     constructor(
