@@ -36,11 +36,6 @@ FROM base AS deps
 RUN pnpm fetch
 RUN pnpm install --offline --frozen-lockfile --ignore-scripts
 
-RUN ls -la shared/timer \
-    && cat shared/timer/package.json \
-    && pnpm --filter @shared/timer build \
-    && ls -la shared/timer/dist
-
 RUN mkdir -p ./services/battle/src/contracts/proto
 RUN pnpm --filter battle proto:generate
 
@@ -78,6 +73,11 @@ HEALTHCHECK --interval=10s --timeout=3s --start-period=5s --retries=3 \
 FROM deps AS build
 
 ENV NODE_ENV=production
+
+RUN cat services/battle/tsconfig.json \
+    && cat tsconfig.base.json \
+    && cat shared/timer/tsconfig.json \
+    && cat shared/timer/package.json
 
 RUN pnpm --filter battle build
 
