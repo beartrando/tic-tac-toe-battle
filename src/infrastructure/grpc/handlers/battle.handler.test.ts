@@ -8,7 +8,6 @@ import BattleId from "../../../domain/battle/value-objects/battle-id.vo";
 import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
 import type BattleGetUseCase from "../../../application/use-cases/battle/battle-get";
 import type BattleGetManyUseCase from "../../../application/use-cases/battle/battle-get-many";
-import type BattleInitUseCase from "../../../application/use-cases/battle/battle-init";
 import * as battleProto from "../../../contracts/proto/battle";
 
 function makeBattle(id: string, status: BattleStatusEnum): BattleEntity {
@@ -28,10 +27,8 @@ function buildHandler(battles: BattleEntity[]) {
         execute: jest.fn().mockResolvedValue(battles),
     } as unknown as BattleGetManyUseCase;
 
-    const initUseCase = {} as BattleInitUseCase;
-
     return {
-        handler: new BattleHandler(getUseCase, getManyUseCase, initUseCase),
+        handler: new BattleHandler(getUseCase, getManyUseCase),
         getUseCase,
         getManyUseCase,
     };
