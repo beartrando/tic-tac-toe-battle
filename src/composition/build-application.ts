@@ -12,7 +12,6 @@ import DbService from "../infrastructure/db/service";
 import jobConfig from "../infrastructure/job/config";
 import PrismaBattleRepository from "../infrastructure/db/repositories/prisma-battle.repository";
 import BattleGetUseCase from "../application/use-cases/battle/battle-get";
-import BattleInitUseCase from "../application/use-cases/battle/battle-init";
 import BattleHandler from "../infrastructure/grpc/handlers/battle.handler";
 import BattleUpdatedConsumer from "../infrastructure/message/consumers/battle-updated";
 import BattleUpdateUseCase from "../application/use-cases/battle/battle-update";
@@ -58,7 +57,6 @@ function buildApplication() {
 
     const battleGetUseCase = new BattleGetUseCase(battleRepository);
     const battleGetManyUseCase = new BattleGetManyUseCase(battleRepository);
-    const battleInitUseCase = new BattleInitUseCase(battleRepository, jobService, messageProducersConfig.battleMatched);
 
     const battleTimeoutSweepUseCase = new BattleTimeoutSweepUseCase(
         battleRepository,
@@ -89,7 +87,6 @@ function buildApplication() {
     const battleHandler = new BattleHandler(
         battleGetUseCase,
         battleGetManyUseCase,
-        battleInitUseCase,
     );
 
     const healthHandler = new HealthHandler(healthUseCase, statusUseCase, livezUseCase, readyzUseCase);
