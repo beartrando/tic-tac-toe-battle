@@ -17,6 +17,7 @@ COPY tsconfig.base.json ./
 COPY services/battle/package*.json ./services/battle/
 COPY services/battle/jest.config.js ./services/battle/
 COPY services/battle/tsconfig.json ./services/battle/
+COPY services/battle/jest.setup.ts ./services/battle/
 COPY services/battle/src ./services/battle/src/
 
 RUN apt-get update \
