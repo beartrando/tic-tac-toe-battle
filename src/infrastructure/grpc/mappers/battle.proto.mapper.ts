@@ -7,11 +7,10 @@ import BattleBoardProtoMapper from "./battle/battle-board.proto.mapper";
 import BattleStatusProtoMapper from "./battle/battle-status.proto.mapper";
 
 export class BattleProtoMapper {
-    static toProto(battle: BattleEntity, trackId?: string): battleProto.BattleObject {
+    static toProto(battle: BattleEntity): battleProto.BattleObject {
 
         return battleProto.BattleObject.create({
             id: battle.id.value,
-            trackId,
             playerIds: battle.playerIds.value.map(id => id.value),
             board: BattleBoardProtoMapper.toProto(battle.board),
             status: BattleStatusProtoMapper.toProto(battle.status),

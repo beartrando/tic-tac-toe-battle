@@ -1,6 +1,5 @@
 import BattleTimeoutCallbackFactory from "./battle-timeout-callback-factory";
-import TimerCallbackFactoryHolder from "../callback-factory-holder";
-import {TimerService} from "@shared/timer";
+import {TimerCallbackFactoryHolder, TimerService} from "@shared/timer";
 import type BattleTimeoutSweepUseCase from "../../../application/use-cases/battle/battle-timeout-sweep";
 
 const SWEEP_INTERVAL_SECONDS = 10;
