@@ -28,7 +28,7 @@ export class BattleHandler {
 
             const result = battleProto.BattlesResponse.create({
                 battles: battleProto.BattleList.create({
-                    items: battles.map(BattleProtoMapper.toProto),
+                    items: battles.map((battle) => BattleProtoMapper.toProto(battle)),
                 }),
             });
 
