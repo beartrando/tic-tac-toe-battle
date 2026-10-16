@@ -7,7 +7,6 @@ import ProfileId from "../profile/value-objects/profile-id.vo";
 
 export type BattleEntityProps = {
     id?: BattleId;
-    trackId?: string;
     playerIds: BattlePlayerIds;
     board?: Board;
     status?: BattleStatus;
@@ -20,7 +19,6 @@ export type BattleEntityProps = {
 export class BattleEntity {
     constructor(
         readonly id: BattleId,
-        readonly trackId?: string,
         readonly playerIds: BattlePlayerIds,
         readonly board: Board,
         public status: BattleStatus,
@@ -36,7 +34,6 @@ export class BattleEntity {
 
         return new BattleEntity(
             props.id ?? BattleId.create(),
-            props.trackId,
             props.playerIds,
             props.board ?? Board.empty(),
             props.status ?? new BattleStatus(BattleStatusEnum.Created),
