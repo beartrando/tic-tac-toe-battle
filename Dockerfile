@@ -75,11 +75,6 @@ FROM deps AS build
 
 ENV NODE_ENV=production
 
-RUN cat services/battle/tsconfig.json \
-    && cat tsconfig.base.json \
-    && cat shared/timer/tsconfig.json \
-    && cat shared/timer/package.json
-
 RUN pnpm --filter battle build
 
 RUN pnpm --filter battle deploy /deploy --prod
