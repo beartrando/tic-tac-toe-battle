@@ -27,11 +27,19 @@ import BattleTimeoutSweepUseCase from "../application/use-cases/battle/battle-ti
 import {TimerCallbackFactoryHolder, TimerService} from "@shared/timer";
 import BattleTimeoutCallbackFactory from "../infrastructure/timer/callbacks/battle-timeout-callback-factory";
 import timeoutConfig from "../infrastructure/timer/config/config";
+import {ElasticService, MessageLogger} from "@shared/elastic";
+import elasticConfig from "../infrastructure/elastic/elastic.config";
+import messagesConfig from "../infrastructure/elastic/messages.config";
 
 
 function buildApplication() {
 
-    const jobService = new JobService(jobConfig, messageConfig, messageProducersConfig)
+    // Elasticsearch: транспортные сообщения (in/out)
+    const elasticService = new ElasticService(elasticConfig);
+
+    const messageLogger = new MessageLogger(elasticService, messagesConfig);
+
+    const jobService = new JobService(jobConfig, messageConfig, messageProducersConfig, messageLogger)
 
     const dbService = new DbService();
 
@@ -43,7 +51,7 @@ function buildApplication() {
     const battleTerminateUseCase = new BattleTerminateUseCase(battleRepository);
     const battleUpdatedConsumer = new BattleUpdatedConsumer(updateUseCase);
     const battleTerminatedConsumer = new BattleTerminatedConsumer(battleTerminateUseCase);
-    const messageService = new MessageService(messageConfig);
+    const messageService = new MessageService(messageConfig, messageLogger);
 
     messageService.addConsumer(
         messageConsumersConfig.battleUpdated,
@@ -87,6 +95,7 @@ function buildApplication() {
     const battleHandler = new BattleHandler(
         battleGetUseCase,
         battleGetManyUseCase,
+        messageLogger,
     );
 
     const healthHandler = new HealthHandler(healthUseCase, statusUseCase, livezUseCase, readyzUseCase);
@@ -100,6 +109,7 @@ function buildApplication() {
         messageService,
         battleTimeoutTimerService,
         timeoutConfig.sweepTimerKey,
+        elasticService,
     );
 }
 
