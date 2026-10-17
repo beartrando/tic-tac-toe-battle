@@ -40,6 +40,7 @@
     "@shared/pg-boss-manager": "workspace:*",
     "@shared/logger": "workspace:*",
     "@shared/errors": "workspace:*",
+    "@shared/elastic": "workspace:*",
     "@prisma/client": "^6.19.3",
     "pg-boss": "^12.15.0",
     "kafkajs": "^2.2.4",

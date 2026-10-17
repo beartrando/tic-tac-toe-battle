@@ -1,4 +1,5 @@
 import logger from "@shared/logger";
+import type {ElasticService} from "@shared/elastic";
 import GrpcService from "../infrastructure/grpc/service";
 import DbService from "../infrastructure/db/service";
 import JobService from "../infrastructure/job/service";
@@ -13,6 +14,7 @@ export class Application {
         private readonly messageService: MessageService,
         private readonly battleTimeoutTimerService: TimerService<string, string>,
         private readonly battleTimeoutTimerKey: string,
+        private readonly elasticService: ElasticService,
     ) {
     }
 
@@ -37,6 +39,13 @@ export class Application {
                 this.battleTimeoutTimerKey,
                 this.battleTimeoutTimerKey,
             );
+
+            if (!await this.elasticService.check()) {
+                logger.warn(
+                    '⚠️ Elasticsearch is unavailable, messages will not be indexed',
+                );
+            }
+
             logger.info(
                 '🚀 Battle service started',
             );
@@ -55,6 +64,7 @@ export class Application {
         await this.dbService.stop();
         await this.jobService.stop();
         await this.messageService.stop();
+        await this.elasticService.stop();
     }
 }
 
